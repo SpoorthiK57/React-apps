@@ -1,0 +1,20 @@
+{
+    "posts": [
+      {
+        "id": 1,
+        "title": "Understanding React Hooks",
+        "body": "React Hooks allow you to use state and lifecycle methods inside functional components."
+      },
+      {
+        "id": 2,
+        "title": "JavaScript ES6 Features",
+        "body": "ES6 introduced features like arrow functions, template literals, destructuring, and more."
+      },
+      {
+        "id": 3,
+        "title": "CSS Flexbox vs Grid",
+        "body": "Flexbox is great for one-dimensional layouts, while Grid is designed for two-dimensional layouts."
+      }
+    ]
+  }
+  
