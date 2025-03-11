@@ -16,6 +16,9 @@ function App() {
     fetch(API_URL)
       .then((response) => response.json())
       .then((data) => {
+        console.log("API Response:", data); // Check the API structure
+        setCountries(data.data);
+        setLoading(false);
         const countryData = {};
 
         data.data.forEach((city) => {
@@ -135,7 +138,7 @@ function App() {
                         <td>{pop.year}</td>
                         <td>{pop.value}</td>
                         <td>{pop.sex}</td>
-                        <td>{pop.reliability}</td>
+                        <td>{pop.reliabilty ? pop.reliabilty : "N/A"}</td>
                       </tr>
                     ))}
                   </tbody>
@@ -174,7 +177,7 @@ function App() {
                             <td>{pop.year}</td>
                             <td>{pop.value}</td>
                             <td>{pop.sex}</td>
-                            <td>{pop.reliability}</td>
+                            <td>{pop.reliabilty}</td>
                           </tr>
                         ))}
                     </tbody>
