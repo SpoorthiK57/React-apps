@@ -4,91 +4,179 @@ import "./App.css";
 const API_URL = "https://countriesnow.space/api/v0.1/countries/population/cities";
 
 function App() {
-  const [cities, setCities] = useState([]);
+  const [countries, setCountries] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [selectedCountry, setSelectedCountry] = useState(null);
+  const [showCities, setShowCities] = useState(null);
   const [selectedCity, setSelectedCity] = useState(null);
-  const [sortedAsc, setSortedAsc] = useState(true); // state to track sort order for Year
+  const [sortedAsc, setSortedAsc] = useState(true);
 
-  // Fetch data from the API
+  // Fetch data from API
   useEffect(() => {
     fetch(API_URL)
       .then((response) => response.json())
-      .then((json) => {
-        setCities(json.data);  // Set the cities data from API response
-        setLoading(false);      // Stop the loading state once data is fetched
+      .then((data) => {
+        const countryData = {};
+
+        data.data.forEach((city) => {
+          const country = city.country;
+
+          if (!countryData[country]) {
+            countryData[country] = {
+              countryName: country,
+              populationCounts: [],
+              cities: [],
+            };
+          }
+
+          // Aggregate total population per year for the country
+          city.populationCounts.forEach((pop) => {
+            const existingYear = countryData[country].populationCounts.find(
+              (p) => p.year === pop.year
+            );
+
+            if (existingYear) {
+              existingYear.value += pop.value;
+            } else {
+              countryData[country].populationCounts.push({ ...pop });
+            }
+          });
+
+          // Store cities belonging to the country
+          countryData[country].cities.push({
+            cityName: city.city,
+            populationCounts: city.populationCounts,
+          });
+        });
+
+        setCountries(Object.values(countryData));
+        setLoading(false);
       })
       .catch((error) => console.error("Error fetching data:", error));
   }, []);
 
-  // Handle city click to toggle population details
+  // Toggle country population data
+  const handleCountryClick = (countryName) => {
+    setSelectedCountry(selectedCountry === countryName ? null : countryName);
+    setShowCities(null); // Reset city list when clicking on country
+    setSelectedCity(null); // Reset selected city
+  };
+
+  // Toggle city list inside a country
+  const handleMoreInfoClick = (countryName) => {
+    setShowCities(showCities === countryName ? null : countryName);
+    setSelectedCity(null); // Reset city selection when switching countries
+  };
+
+  // Toggle city-specific data
   const handleCityClick = (cityName) => {
     setSelectedCity(selectedCity === cityName ? null : cityName);
   };
 
-  // Handle sorting for year column
+  // Handle sorting by year
   const handleSort = () => {
-    setSortedAsc(!sortedAsc); // Toggle the sorting order (ascending/descending)
+    setSortedAsc(!sortedAsc);
 
-    // Sort cities population counts by year for the selected city
-    const sortedCities = cities.map((city) => {
-      const sortedPopulationCounts = [...city.populationCounts].sort((a, b) => {
+    const sortedCountries = countries.map((country) => {
+      const sortedPop = [...country.populationCounts].sort((a, b) => {
         return sortedAsc
-          ? parseInt(a.year) - parseInt(b.year) // Ascending order
-          : parseInt(b.year) - parseInt(a.year); // Descending order
+          ? parseInt(a.year) - parseInt(b.year)
+          : parseInt(b.year) - parseInt(a.year);
       });
-      return { ...city, populationCounts: sortedPopulationCounts };
+
+      return { ...country, populationCounts: sortedPop };
     });
 
-    setCities(sortedCities); // Update cities state with sorted data
+    setCountries(sortedCountries);
   };
-
-
-  
 
   return (
     <div className="container">
-      <h1 className="heading">City Population Data</h1>
+      <h1 className="heading">Country Population Data</h1>
 
       {loading ? (
         <p>Loading...</p>
       ) : (
         <ul className="list">
-          {cities.map((city, index) => (
-            <li
-              key={index}
-              className="list-item"
-              
-            >
-              <h2 className="title">{city.city} ({city.country})<span
-                  className="more-info"
-                  onClick={() => handleCityClick(city.city)}
-                >
-                  More information
-                </span>
+          {countries.map((country, index) => (
+            <li key={index} className="list-item">
+              {/* Country Name Clickable */}
+              <h2 className="title" onClick={() => handleCountryClick(country.countryName)}>
+                {country.countryName}
               </h2>
 
-              {selectedCity === city.city && (
+              {/* "More Info" to show cities */}
+              <span
+                className="more-info"
+                onClick={() => handleMoreInfoClick(country.countryName)}
+              >
+                {showCities === country.countryName ? "Hide Cities" : "More Info"}
+              </span>
+
+              {/* Show country population data when clicked */}
+              {selectedCountry === country.countryName && (
+                <table className="population-table">
+                  <thead>
+                    <tr>
+                      <th>
+                        Year
+                        <button className="sort-button" onClick={handleSort}>
+                          {sortedAsc ? "▲" : "▼"}
+                        </button>
+                      </th>
+                      <th>Population</th>
+                      <th>Sex</th>
+                      <th>Reliability</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {country.populationCounts.map((pop, popIndex) => (
+                      <tr key={popIndex}>
+                        <td>{pop.year}</td>
+                        <td>{pop.value}</td>
+                        <td>{pop.sex}</td>
+                        <td>{pop.reliability}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              )}
+
+              {/* Show list of cities inside the country */}
+              {showCities === country.countryName && (
+                <ul>
+                  {country.cities.map((city, cityIndex) => (
+                    <li key={cityIndex} onClick={() => handleCityClick(city.cityName)}>
+                      {city.cityName}
+                    </li>
+                  ))}
+                </ul>
+              )}
+
+              {/* Show city-specific data */}
+              {selectedCity && showCities === country.countryName && (
                 <div>
+                  <h4>City Population Info: {selectedCity}</h4>
                   <table className="population-table">
                     <thead>
                       <tr>
-                        <th>Year<button className="sort-button" onClick={handleSort}>
-                            {sortedAsc ? "▲" : "▼"} 
-                          </button></th>
+                        <th>Year</th>
                         <th>Population</th>
                         <th>Sex</th>
                         <th>Reliability</th>
                       </tr>
                     </thead>
                     <tbody>
-                      {city.populationCounts.map((pop, popIndex) => (
-                        <tr key={popIndex}>
-                          <td>{pop.year}</td>
-                          <td>{pop.value}</td>
-                          <td>{pop.sex}</td>
-                          <td>{pop.reliabilty}</td>
-                        </tr>
-                      ))}
+                      {country.cities
+                        .find((city) => city.cityName === selectedCity)
+                        .populationCounts.map((pop, popIndex) => (
+                          <tr key={popIndex}>
+                            <td>{pop.year}</td>
+                            <td>{pop.value}</td>
+                            <td>{pop.sex}</td>
+                            <td>{pop.reliability}</td>
+                          </tr>
+                        ))}
                     </tbody>
                   </table>
                 </div>
