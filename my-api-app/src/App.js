@@ -79,20 +79,24 @@ function App() {
   // Handle sorting by year
   const handleSort = () => {
     setSortedAsc(!sortedAsc);
-
+  
     const sortedCountries = countries.map((country) => {
-      const sortedPop = [...country.populationCounts].sort((a, b) => {
-        return sortedAsc
-          ? parseInt(a.year) - parseInt(b.year)
-          : parseInt(b.year) - parseInt(a.year);
-      });
-
-      return { ...country, populationCounts: sortedPop };
+      const sortedPop = [...country.populationCounts].sort((a, b) =>
+        sortedAsc ? parseInt(a.year) - parseInt(b.year) : parseInt(b.year) - parseInt(a.year)
+      );
+  
+      const sortedCities = country.cities.map((city) => ({
+        ...city,
+        populationCounts: [...city.populationCounts].sort((a, b) =>
+          sortedAsc ? parseInt(a.year) - parseInt(b.year) : parseInt(b.year) - parseInt(a.year)
+        ),
+      }));
+  
+      return { ...country, populationCounts: sortedPop, cities: sortedCities };
     });
-
+  
     setCountries(sortedCountries);
   };
-
   return (
     <div className="container">
       <h1 className="heading">Country Population Data</h1>
@@ -148,12 +152,16 @@ function App() {
               {/* Show list of cities inside the country */}
               {showCities === country.countryName && (
                 <ul>
-                  {country.cities.map((city, cityIndex) => (
-                    <li key={cityIndex} onClick={() => handleCityClick(city.cityName)}>
-                      {city.cityName}
-                    </li>
-                  ))}
-                </ul>
+                {country.cities.map((city, cityIndex) => (
+                  <li 
+                    key={cityIndex} 
+                    onClick={() => handleCityClick(city.cityName)}
+                    className={selectedCity === city.cityName ? "selected-city" : ""}
+                  >
+                    {city.cityName}
+                  </li>
+                ))}
+              </ul>
               )}
 
               {/* Show city-specific data */}
@@ -163,7 +171,9 @@ function App() {
                   <table className="population-table">
                     <thead>
                       <tr>
-                        <th>Year</th>
+                        <th>Year<button className="sort-button" onClick={handleSort}>
+                          {sortedAsc ? "▲" : "▼"}
+                        </button></th>
                         <th>Population</th>
                         <th>Sex</th>
                         <th>Reliability</th>

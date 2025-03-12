@@ -78,4 +78,11 @@
   
   text-align: center;
 }
+.selected-city {
+  /* Highlight color */
+  font-weight: bold;
+  padding: 0px;
+  border-radius: 5px;
+}
+
 
