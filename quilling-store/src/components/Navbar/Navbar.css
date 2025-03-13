@@ -1,28 +1,89 @@
-.navbar{
+.navbar {
     display: flex;
-    width: 100%;
-    position: fixed;
-    top: 0%;
-    left: 0%;
-    align-items: center;
     justify-content: space-between;
-    color: white;
-}
-.navbar .logo{
-    padding: 9px;
-    width: 148px;
-    height: 100px;
-    object-fit: contain;
-    border-radius: 50px;
-
-}
-.navbar .list{
-    display: flex;
-    font-weight: bold;
     align-items: center;
-    justify-content: center;
-    gap: 20px;
+    width: 100%;
+    padding: 10px 20px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    color: white;
+  }
+  .navbar:hover{
+    background-color: bisque;
+  }
+  
+  .left {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  .logo {
+    width: 80px;
+    height: 80px;
+    border-radius: 137px;
+  }
+  
+  h2 {
+    font-size: 30px;
+    color: black;
+  }
+  
+  .list {
+    display: flex;
+    gap: 112px;
+    color: black;
     list-style: none;
+    margin: 0;
+    font-weight: 500;
+    font-style: bold;
+  }
+  
+  .list li {
+    display: inline-block;
+    font-style: bold;
+  }
+  .link.active{
+    border-bottom: 2px solid back;
+  }
+  
+  .link {
+    text-decoration: none;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    transition: color 0.3s;
     cursor: pointer;
-
-}
+  }
+  
+  .link:hover {
+    color: #ff6347; /* Or any color you like */
+  }
+  
+  .right {
+    display: flex;
+    align-items: center;
+    gap: 40px;
+  }
+  
+  .cart, .login {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+  }
+  
+  .cart-icon {
+    width: 25px;
+    height: auto;
+    cursor: pointer;
+  }
+  
+  .login-button {
+    padding: 5px 10px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+  }
+  

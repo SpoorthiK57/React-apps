@@ -1,25 +1,50 @@
 import React from "react";
 import "./Navbar.css";
-import logo from "../../assets/logo.png";
-import { Link } from "react-router-dom";
+import cart_logo from "../../assets/cart_logo.png";
+import quilling_wonderland from "../../assets/quilling wonderland.jpg";
+import login_logo from "../../assets/login_logo.png";
+import { Link, NavLink } from "react-router-dom";
 const Navbar = () => {
   return (
     <div className="navbar">
-      <img src={logo} alt="" className="logo" />
+      <div className="left">
+        <img src={quilling_wonderland} alt="" className="logo" />
+        <h2>Paper Quills</h2>
+      </div>
       <ul className="list">
         <li>
-          <Link to="/">Home</Link>
+          <NavLink to="/" activeClassName="active">
+            Home
+          </NavLink>
         </li>
         <li>
-          <Link to="/products">Products</Link>
+          <NavLink to="/products" activeClassName="active">
+            Products
+          </NavLink>
         </li>
         <li>
-          <Link to="/About">About</Link>
+          <NavLink to="/About" activeClassName="active">
+            About
+          </NavLink>
         </li>
         <li>
-          <Link to="/Contact">Contact</Link>
+          <NavLink to="/Contact" activeClassName="active">
+            Contact
+          </NavLink>
         </li>
       </ul>
+      <div className="right">
+        <div className="cart">
+          <img src={cart_logo} alt="" className="cart-icon" />
+          <NavLink to="/cart"></NavLink>
+        </div>
+
+        <div className="login">
+          <NavLink to="/login">
+            <button className="login-button">Login</button>
+          </NavLink>
+        </div>
+      </div>
     </div>
   );
 };
