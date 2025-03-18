@@ -36,7 +36,7 @@ const Home = () => {
           and shaped with care, come together to create breathtaking designs.
           From elegant floral patterns to intricate portraits, every piece tells
           a unique story. It’s an art that embraces mindfulness, where each roll
-          and fold requires a gentle touch and a keen eye. At PaperFusion, we
+          and fold requires a gentle touch and a keen eye. At Paper Quills, we
           celebrate the beauty of quilling by bringing handcrafted elegance to
           life. Whether you’re discovering this art for the first time or
           cherishing it as a longtime passion, our collection showcases the
