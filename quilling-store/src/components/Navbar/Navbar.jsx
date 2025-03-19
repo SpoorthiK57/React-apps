@@ -1,12 +1,21 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./Navbar.css";
-import cart_logo from "../../assets/cart_logo.png";
+import cart_logo from "../../assets/cart_log.png";
 import quilling_wonderland from "../../assets/quilling wonderland.jpg";
 import login_logo from "../../assets/login_logo.png";
 import { Link, NavLink } from "react-router-dom";
 const Navbar = () => {
+  const [scrolled, setScrolled] = useState(false);
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 0);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   return (
-    <div className="navbar">
+    <div className={`navbar ${scrolled ? "scrolled" : ""}`}>
       <div className="left">
         <img src={quilling_wonderland} alt="" className="logo" />
         <h2>Paper Quills</h2>

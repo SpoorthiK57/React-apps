@@ -9,6 +9,12 @@
     left: 0;
     z-index: 1000;
     color: white;
+    transition: background-color 0.3s, box-shadow 0.3s;
+  }
+  
+  .navbar.scrolled {
+    background-color: bisque; /* Lighten the navbar */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Add a shadow */
   }
   .navbar:hover{
     background-color: bisque;
@@ -76,7 +82,7 @@
   }
   
   .cart-icon {
-    width: 25px;
+    width: 75px;
     height: auto;
     cursor: pointer;
   }
