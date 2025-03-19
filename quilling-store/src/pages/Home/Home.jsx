@@ -17,15 +17,28 @@ const Home = () => {
         </div>
       </div>
       <div className="new-arrivals">
-        <div className="arrival-item1">
-          <img src={image1} alt="" />
-          <p>Blue Tortoise</p>
-          <button>view details</button>
-        </div>
-        <div className="arrival-item2">
-          <img src={image1} alt="" />
-          <p>Blue Tortoise</p>
-          <button>view details</button>
+        <h2>New Arrivals</h2>
+        <div className="new-arrivals-items">
+          <div className="arrival-item1">
+            <img src={image1} alt="" />
+            <p>Blue Tortoise</p>
+            <button>view details</button>
+          </div>
+          <div className="arrival-item2">
+            <img src={image1} alt="" />
+            <p>Blue Tortoise</p>
+            <button>view details</button>
+          </div>
+          <div className="arrival-item3">
+            <img src={image1} alt="" />
+            <p>Blue Tortoise</p>
+            <button>view details</button>
+          </div>
+          <div className="arrival-item4">
+            <img src={image1} alt="" />
+            <p>Blue Tortoise</p>
+            <button>view details</button>
+          </div>
         </div>
       </div>
       <div className="story">
