@@ -1,10 +1,21 @@
 import React from "react";
 import "./Home.css";
-import banner from "../../assets/banner.png";
-import story_image from "../../assets/story_bg.png";
-import image1 from "../../assets/image1.jpg";
-
+import { useNavigate } from "react-router-dom";
 const Home = () => {
+  const navigate = useNavigate();
+  const handleShopClick = () => {
+    navigate("/Products");
+  };
+  const banner = "/assets/banner.png";
+  const story_image = "/assets/story_bg.png";
+  const image1 = "/assets/image1.jpg";
+
+  const arrivals = [
+    { img: image1, name: "Blue Tortoise" },
+    { img: image1, name: "Blue Tortoise" },
+    { img: image1, name: "Blue Tortoise" },
+    { img: image1, name: "Blue Tortoise" },
+  ];
   return (
     <div className="home">
       <div className="banner">
@@ -13,32 +24,21 @@ const Home = () => {
           <h2>Welcome to Paper Quills - Handmade Quilling Wonders!</h2>
         </div>
         <div className="shop-button">
-          <button className="shop">Shop our products</button>
+          <button className="shop" onClick={handleShopClick}>
+            Shop our products
+          </button>
         </div>
       </div>
       <div className="new-arrivals">
         <h2>New Arrivals</h2>
         <div className="new-arrivals-items">
-          <div className="arrival-item1">
-            <img src={image1} alt="" />
-            <p>Blue Tortoise</p>
-            <button>view details</button>
-          </div>
-          <div className="arrival-item2">
-            <img src={image1} alt="" />
-            <p>Blue Tortoise</p>
-            <button>view details</button>
-          </div>
-          <div className="arrival-item3">
-            <img src={image1} alt="" />
-            <p>Blue Tortoise</p>
-            <button>view details</button>
-          </div>
-          <div className="arrival-item4">
-            <img src={image1} alt="" />
-            <p>Blue Tortoise</p>
-            <button>view details</button>
-          </div>
+          {arrivals.map((item, index) => (
+            <div key={index} className="arrival-item">
+              <img src={item.img} alt={item.name} />
+              <p>{item.name}</p>
+              <button>view details</button>
+            </div>
+          ))}
         </div>
       </div>
       <div className="story">

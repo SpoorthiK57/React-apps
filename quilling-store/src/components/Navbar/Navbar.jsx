@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "./Navbar.css";
-import cart_logo from "../../assets/cart_log.png";
-import quilling_wonderland from "../../assets/quilling wonderland.jpg";
-import login_logo from "../../assets/login_logo.png";
+import quilling_wonderland from "../../../public/assets/quilling wonderland.jpg";
 import { Link, NavLink } from "react-router-dom";
 const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
@@ -22,29 +20,41 @@ const Navbar = () => {
       </div>
       <ul className="list">
         <li>
-          <NavLink to="/" activeClassName="active">
+          <NavLink
+            to="/"
+            className={({ isActive }) => (isActive ? "active-link" : "")}
+          >
             Home
           </NavLink>
         </li>
         <li>
-          <NavLink to="/products" activeClassName="active">
+          <NavLink
+            to="/products"
+            className={({ isActive }) => (isActive ? "active-link" : "")}
+          >
             Products
           </NavLink>
         </li>
         <li>
-          <NavLink to="/About" activeClassName="active">
+          <NavLink
+            to="/About"
+            className={({ isActive }) => (isActive ? "active-link" : "")}
+          >
             About
           </NavLink>
         </li>
         <li>
-          <NavLink to="/Contact" activeClassName="active">
+          <NavLink
+            to="/Contact"
+            className={({ isActive }) => (isActive ? "active-link" : "")}
+          >
             Contact
           </NavLink>
         </li>
       </ul>
       <div className="right">
         <div className="cart">
-          <img src={cart_logo} alt="" className="cart-icon" />
+          <img src="/assets/cart_log.png" alt="" className="cart-icon" />
           <NavLink to="/cart"></NavLink>
         </div>
 
