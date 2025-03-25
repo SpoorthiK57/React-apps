@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "./Navbar.css";
-import quilling_wonderland from "../../../public/assets/quilling wonderland.jpg";
+import quilling_wonderland from "/assets/quilling wonderland.jpg";
 import { Link, NavLink } from "react-router-dom";
 const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
