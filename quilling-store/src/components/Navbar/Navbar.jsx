@@ -1,7 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import "./Navbar.css";
 import quilling_wonderland from "/assets/quilling wonderland.jpg";
 import { Link, NavLink } from "react-router-dom";
+import { CartContext } from "../../context/CartContext";
+
 const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
   useEffect(() => {
@@ -11,6 +13,7 @@ const Navbar = () => {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+  const { cart } = useContext(CartContext);
 
   return (
     <div className={`navbar ${scrolled ? "scrolled" : ""}`}>
@@ -55,7 +58,9 @@ const Navbar = () => {
       <div className="right">
         <div className="cart">
           <img src="/assets/cart_log.png" alt="" className="cart-icon" />
-          <NavLink to="/cart"></NavLink>
+          <NavLink to="/cart">
+            <span className="cart-count">{cart.length}</span>
+          </NavLink>
         </div>
 
         <div className="login">
