@@ -1,6 +1,8 @@
 import React from "react";
 import "./Home.css";
 import { useNavigate } from "react-router-dom";
+import products from "../../data/product";
+
 const Home = () => {
   const navigate = useNavigate();
   const handleShopClick = () => {
@@ -10,12 +12,8 @@ const Home = () => {
   const story_image = "/assets/story_bg.png";
   const image1 = "/assets/image1.jpg";
 
-  const arrivals = [
-    { img: image1, name: "Blue Tortoise" },
-    { img: image1, name: "Blue Tortoise" },
-    { img: image1, name: "Blue Tortoise" },
-    { img: image1, name: "Blue Tortoise" },
-  ];
+  const arrivals = products.slice(0, 4); // or any 4 you want
+
   return (
     <div className="home">
       <div className="banner">
@@ -32,11 +30,13 @@ const Home = () => {
       <div className="new-arrivals">
         <h2>New Arrivals</h2>
         <div className="new-arrivals-items">
-          {arrivals.map((item, index) => (
-            <div key={index} className="arrival-item">
-              <img src={item.img} alt={item.name} />
+          {arrivals.map((item) => (
+            <div key={item.id} className="arrival-item">
+              <img src={item.image} alt={item.name} />
               <p>{item.name}</p>
-              <button>view details</button>
+              <button onClick={() => navigate(`/product/${item.id}`)}>
+                View Details
+              </button>
             </div>
           ))}
         </div>
