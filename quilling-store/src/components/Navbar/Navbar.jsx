@@ -57,10 +57,10 @@ const Navbar = () => {
       </ul>
       <div className="right">
         <div className="cart">
-          <img src="/assets/cart_log.png" alt="" className="cart-icon" />
           <NavLink to="/cart">
-            <span className="cart-count">{cart.length}</span>
+            <img src="/assets/cart_log.png" className="cart-icon" />
           </NavLink>
+          <span className="cart-count">{cart.length}</span>
         </div>
 
         <div className="login">

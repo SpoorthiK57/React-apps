@@ -1,4 +1,4 @@
-import React, { Children, createContext, useContext } from "react";
+import React, { Children, createContext, useContext, useState } from "react";
 import "./Cart.css";
 import { CartContext } from "../../context/CartContext";
 import { Link, NavLink } from "react-router-dom";
@@ -9,16 +9,18 @@ const Cart = () => {
   // Calculate the total cost of the items in the cart
   const calculateTotal = () => {
     return cart
-      .reduce(
-        (total, item) =>
-          total + parseFloat(item.price.replace("$", "")) * item.quantity,
-        0
-      )
+      .reduce((total, item) => {
+        const price =
+          typeof item.price === "string"
+            ? parseFloat(item.price.replace("$", ""))
+            : item.price; // if it's already a number, just use it
+        return total + price * item.quantity;
+      }, 0)
       .toFixed(2);
   };
 
   return (
-    <div className="cart">
+    <div className="cart-content">
       <h1>Your Cart</h1>
       {cart.length === 0 ? (
         <p>Your cart is empty. Start shopping!</p>
@@ -29,7 +31,12 @@ const Cart = () => {
               <img src={item.image} alt={item.name} />
               <div className="item-details">
                 <p>{item.name}</p>
-                <p>Price: {item.price}</p>
+                <p>
+                  Price: $
+                  {typeof item.price === "string"
+                    ? parseFloat(item.price).toFixed(2)
+                    : item?.price.toFixed(2)}
+                </p>
 
                 {/* Quantity Control */}
                 <div className="quantity-control">

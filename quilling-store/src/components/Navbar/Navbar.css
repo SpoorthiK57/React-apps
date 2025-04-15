@@ -75,17 +75,14 @@
     gap: 40px;
   }
   
-  .cart, .login {
+  .cart{
+    position: relative;
+  }
+  .login {
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 5px;
-  }
-  
-  .cart-icon {
-    width: 75px;
-    height: auto;
-    cursor: pointer;
   }
   
   .login-button {
@@ -97,12 +94,15 @@
   .cart-icon {
     position: relative;
     display: inline-block;
+    width: 75px;
+    height: auto;
+    cursor: pointer;
   }
   
   .cart-count {
     position: absolute;
-    top: 28px;
-    right: 128px;
+    top: 0px;
+    right: 18px;
     background: red;
     color: white;
     font-size: 12px;
