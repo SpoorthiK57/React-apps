@@ -1,76 +1,95 @@
-import React, { Children, createContext, useContext, useState } from "react";
+import React, { useContext } from "react";
 import "./Cart.css";
 import { CartContext } from "../../context/CartContext";
-import { Link, NavLink } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const Cart = () => {
   const { cart, removeFromCart, updateQuantity } = useContext(CartContext);
 
-  // Calculate the total cost of the items in the cart
-  const calculateTotal = () => {
-    return cart
+  const calculateTotal = () =>
+    cart
       .reduce((total, item) => {
-        const price =
-          typeof item.price === "string"
-            ? parseFloat(item.price.replace("$", ""))
-            : item.price; // if it's already a number, just use it
-        return total + price * item.quantity;
+        const price = parseFloat(item.price);
+        return total + price * (item.quantity || 1);
       }, 0)
       .toFixed(2);
-  };
 
   return (
-    <div className="cart-content">
-      <h1>Your Cart</h1>
+    <div className="cart-container">
+      <h2 className="cart-heading">Shopping cart</h2>
       {cart.length === 0 ? (
-        <p>Your cart is empty. Start shopping!</p>
+        <p className="empty-cart">Your cart is empty.</p>
       ) : (
-        <div>
+        <>
+          <div className="cart-header-row">
+            <span>Product</span>
+            <span>Price</span>
+            <span>Quantity</span>
+            <span>Total</span>
+          </div>
+
           {cart.map((item) => (
-            <div key={item.id} className="cart-item">
-              <img src={item.image} alt={item.name} />
+            <div key={item.id} className="cart-item-row">
               <div className="item-details">
-                <p>{item.name}</p>
-                <p>
-                  Price: $
-                  {typeof item.price === "string"
-                    ? parseFloat(item.price).toFixed(2)
-                    : item?.price.toFixed(2)}
-                </p>
-
-                {/* Quantity Control */}
-                <div className="quantity-control">
-                  <button
-                    onClick={() =>
-                      item.quantity > 1
-                        ? updateQuantity(item.id, item.quantity - 1)
-                        : null
-                    }
-                  >
-                    -
-                  </button>
-                  <span>{item.quantity}</span>
-                  <button
-                    onClick={() => updateQuantity(item.id, item.quantity + 1)}
-                  >
-                    +
-                  </button>
+                <img src={item.image} alt={item.name} />
+                <div>
+                  <p className="product-name">{item.name}</p>
+                  <p className="product-desc">{item.description}</p>
                 </div>
-
-                {/* Remove from Cart */}
-                <button onClick={() => removeFromCart(item.id)}>Remove</button>
               </div>
+              <span>${parseFloat(item.price).toFixed(2)}</span>
+              <div className="quantity-controls">
+                <button
+                  onClick={() => updateQuantity(item.id, item.quantity - 1)}
+                >
+                  -
+                </button>
+                <span>{item.quantity}</span>
+                <button
+                  onClick={() => updateQuantity(item.id, item.quantity + 1)}
+                >
+                  +
+                </button>
+                <button
+                  className="remove-btn"
+                  onClick={() => removeFromCart(item.id)}
+                >
+                  Remove
+                </button>
+              </div>
+              <span>
+                ${(item.quantity * parseFloat(item.price)).toFixed(2)}
+              </span>
             </div>
           ))}
 
-          {/* Cart Total */}
-          <div className="total">
-            <h3>Total: ${calculateTotal()}</h3>
-            <Link to="/checkout">
-              <button>Proceed to Checkout</button>
-            </Link>
+          <div className="cart-footer">
+            <div className="cart-actions">
+              <span>UPDATE CART</span> |{" "}
+              <Link to="/products">Continue shopping</Link>
+            </div>
+            <div className="cart-subtotal">
+              <h3>Subtotal</h3>
+              <p className="subtotal-amount">${calculateTotal()}</p>
+            </div>
+            <div className="order-note">
+              <label>ADD A NOTE TO YOUR ORDER</label>
+              <textarea placeholder="Write your note here..."></textarea>
+            </div>
+            <p className="checkout-info">
+              Taxes and <Link to="/shipping">shipping</Link> calculated at
+              checkout
+            </p>
+            <button className="checkout-btn">CHECK OUT</button>
+
+            <div className="payment-options">
+              <img src="/assets/shop_pay.png" alt="Shop Pay" />
+              <img src="/assets/amazon_pay.png" alt="Amazon Pay" />
+              <img src="/assets/paypal.png" alt="PayPal" />
+              <img src="/assets/gpay.png" alt="Google Pay" />
+            </div>
           </div>
-        </div>
+        </>
       )}
     </div>
   );

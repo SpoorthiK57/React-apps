@@ -14,6 +14,7 @@ const Navbar = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
   const { cart } = useContext(CartContext);
+  const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
 
   return (
     <div className={`navbar ${scrolled ? "scrolled" : ""}`}>
@@ -60,7 +61,7 @@ const Navbar = () => {
           <NavLink to="/cart">
             <img src="/assets/cart_log.png" className="cart-icon" />
           </NavLink>
-          <span className="cart-count">{cart.length}</span>
+          <span className="cart-count">{totalItems}</span>
         </div>
 
         <div className="login">
