@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import "./Cart.css";
 import { CartContext } from "../../context/CartContext";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 
 const Cart = () => {
   const { cart, removeFromCart, updateQuantity } = useContext(CartContext);
@@ -80,7 +80,9 @@ const Cart = () => {
               Taxes and <Link to="/shipping">shipping</Link> calculated at
               checkout
             </p>
-            <button className="checkout-btn">CHECK OUT</button>
+            <NavLink to="/checkout">
+              <button className="checkout-btn">Checkout</button>
+            </NavLink>
 
             <div className="payment-options">
               <img src="/assets/shop_pay.png" alt="Shop Pay" />
