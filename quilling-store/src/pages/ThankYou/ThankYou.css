@@ -1,17 +1,65 @@
-.thankyou-container {
-    text-align: center;
-    margin-top: 100px;
-    margin-bottom: 100px;
-    font-family: Arial, sans-serif;
-  }
-  
-  .thankyou-container h1 {
-    font-size: 36px;
-    margin-bottom: 20px;
-  }
-  
-  .thankyou-container p {
-    font-size: 18px;
-    color: #555;
-  }
-  
+.thank-you-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 80px;
+  justify-content: center;
+  padding: 3rem 1rem;
+  background-color: #f4f4f4;
+  min-height: 80vh;
+  text-align: center;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.thank-you-page h1 {
+  font-size: 2rem;
+  color: #2e7d32;
+  margin-bottom: 1rem;
+}
+
+.thank-you-page p {
+  font-size: 1.1rem;
+  color: #444;
+  margin-bottom: 0.8rem;
+}
+
+.order-summary {
+  background-color: #fff;
+  border-radius: 10px;
+  padding: 1.5rem;
+  margin-top: 2rem;
+  width: 100%;
+  max-width: 500px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  text-align: left;
+}
+
+.order-summary h2 {
+  font-size: 1.4rem;
+  margin-bottom: 1rem;
+  color: #333;
+}
+
+.summary-item {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.6rem;
+  font-size: 1rem;
+  color: #555;
+}
+
+.thank-you-page button {
+  margin-top: 2rem;
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  background-color: #2e7d32;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.thank-you-page button:hover {
+  background-color: #27682c;
+}
