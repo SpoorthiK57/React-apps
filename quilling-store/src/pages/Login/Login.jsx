@@ -5,12 +5,12 @@ import "./Login.css";
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [checked, setChecked] = useState("");
   const navigate = useNavigate();
 
   const handleLogin = (e) => {
     e.preventDefault();
 
-    // Simple dummy validation
     if (email === "test@example.com" && password === "password") {
       alert("Login successful!");
       navigate("/");
@@ -37,6 +37,13 @@ const Login = () => {
           onChange={(e) => setPassword(e.target.value)}
           required
         />
+        <input
+          type="checkbox"
+          id="checkbox"
+          value={checked}
+          onChange={(e) => setChecked(e.target.value)}
+        />
+        <label htmlFor="checkbox">Remember me</label>
         <button type="submit">Login</button>
       </form>
       <p>
