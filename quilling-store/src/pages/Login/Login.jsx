@@ -1,24 +1,33 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Login.css";
-import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [checked, setChecked] = useState(false);
   const navigate = useNavigate();
+  const auth = getAuth();
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
+    try {
+      const userCredential = await signInWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+      const user = userCredential.user;
 
-    if (email === "test@example.com" && password === "password") {
       if (checked) {
-        localStorage.setItem("userEmail", email);
+        localStorage.setItem("rememberedEmail", email);
       }
+
       alert("Login successful!");
       navigate("/");
-    } else {
+    } catch (error) {
+      console.error("Login error:", error.message);
       alert("Invalid email or password");
     }
   };
@@ -52,7 +61,7 @@ const Login = () => {
           type="checkbox"
           id="checkbox"
           checked={checked}
-          onChange={(e) => setChecked(e.target.value)}
+          onChange={(e) => setChecked(e.target.checked)}
         />
         <label htmlFor="checkbox">Remember me</label>
         <button type="submit">Login</button>
