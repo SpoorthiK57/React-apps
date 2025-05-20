@@ -3,6 +3,7 @@ import "./Navbar.css";
 import quilling_wonderland from "/assets/quilling wonderland.jpg";
 import { Link, NavLink } from "react-router-dom";
 import { CartContext } from "../../context/CartContext";
+import { AuthContext } from "../../context/AuthContext";
 
 const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
@@ -15,6 +16,7 @@ const Navbar = () => {
   }, []);
   const { cart } = useContext(CartContext);
   const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+  const { currentUser } = useContext(AuthContext);
 
   return (
     <div className={`navbar ${scrolled ? "scrolled" : ""}`}>

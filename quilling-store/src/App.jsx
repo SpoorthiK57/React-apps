@@ -10,6 +10,7 @@ import CheckOut from "./pages/CheckOut/CheckOut";
 import ThankYou from "./pages/ThankYou/ThankYou";
 import Login from "./pages/Login/Login";
 import SignUp from "./pages/SignUp/SignUp";
+import OrderHistory from "./pages/OrderHistory/OrderHistory";
 
 const App = () => {
   return (
@@ -24,6 +25,7 @@ const App = () => {
         <Route path="/thankyou" element={<ThankYou />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<SignUp />} />
+        <Route path="/orders" element={<OrderHistory />} />
       </Routes>
       <Footer />
     </div>
