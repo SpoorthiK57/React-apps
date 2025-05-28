@@ -2,6 +2,10 @@ import React, { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { CartContext } from "../../context/CartContext";
 import "./CheckOut.css";
+import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
+
+const stripe = useStripe();
+const elements = useElements();
 
 const CheckOut = () => {
   const { cart, setCart } = useContext(CartContext);
@@ -23,7 +27,7 @@ const CheckOut = () => {
     0
   );
 
-  const handlePlaceOrder = () => {
+  const handlePlaceOrder = async () => {
     if (
       !email ||
       !fullName ||
@@ -31,20 +35,43 @@ const CheckOut = () => {
       !city ||
       !stateName ||
       !zip ||
-      !country ||
-      !cardNumber ||
-      !expiry ||
-      !cvv
+      !country
     ) {
-      alert("Please fill all required fields before placing the order!");
+      alert("Please fill all required fields.");
       return;
     }
 
-    // Clear cart
-    setCart([]);
+    const res = await fetch("http://localhost:5000/create-payment-intent", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ amount: Math.round(subtotal * 100) }), // in cents
+    });
 
-    // Redirect to Thank You page
-    navigate("/thankyou");
+    const { clientSecret } = await res.json();
+
+    const result = await stripe.confirmCardPayment(clientSecret, {
+      payment_method: {
+        card: elements.getElement(CardElement),
+        billing_details: {
+          name: fullName,
+          email: email,
+          address: {
+            city: city,
+            line1: address,
+            state: stateName,
+            postal_code: zip,
+            country: country,
+          },
+        },
+      },
+    });
+
+    if (result.error) {
+      alert(result.error.message);
+    } else if (result.paymentIntent.status === "succeeded") {
+      setCart([]);
+      navigate("/thankyou");
+    }
   };
 
   return (
@@ -113,24 +140,7 @@ const CheckOut = () => {
       {/* Payment Information */}
       <section className="checkout-section">
         <h2>Payment Method</h2>
-        <input
-          type="text"
-          placeholder="Card Number"
-          value={cardNumber}
-          onChange={(e) => setCardNumber(e.target.value)}
-        />
-        <input
-          type="text"
-          placeholder="Expiry Date (MM/YY)"
-          value={expiry}
-          onChange={(e) => setExpiry(e.target.value)}
-        />
-        <input
-          type="text"
-          placeholder="CVV"
-          value={cvv}
-          onChange={(e) => setCvv(e.target.value)}
-        />
+        <CardElement options={{ hidePostalCode: true }} />
       </section>
 
       {/* Order Summary */}

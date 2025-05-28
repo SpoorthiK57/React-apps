@@ -54,7 +54,6 @@ const OrderHistory = () => {
         <ul>
           {orders.map((order) => (
             <li key={order.id}>
-              {/* Customize based on your order fields */}
               <p>Order ID: {order.id}</p>
               <p>Items: {order.items?.join(", ")}</p>
               <p>Date: {order.date}</p>

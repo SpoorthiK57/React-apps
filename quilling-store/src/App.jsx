@@ -11,22 +11,31 @@ import ThankYou from "./pages/ThankYou/ThankYou";
 import Login from "./pages/Login/Login";
 import SignUp from "./pages/SignUp/SignUp";
 import OrderHistory from "./pages/OrderHistory/OrderHistory";
+import { Elements } from "@stripe/react-stripe-js";
+import { loadStripe } from "@stripe/stripe-js";
+
+const stripePromise = loadStripe(
+  "pk_test_51RRwpzGao1hToinWVxX3YumAg0lmZ4WVE0Fc2GglzMD06kRymEpLgSkcUzpSXu1lZvV3MOmpemf7lrDK4Op0ljQD005Swq7gaq"
+);
 
 const App = () => {
   return (
     <div className="app">
       <Navbar />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/products" element={<Products />} />
-        <Route path="/product/:id" element={<ProductDetails />} />
-        <Route path="/cart" element={<Cart />} />
-        <Route path="/checkout" element={<CheckOut />} />
-        <Route path="/thankyou" element={<ThankYou />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<SignUp />} />
-        <Route path="/orders" element={<OrderHistory />} />
-      </Routes>
+      <Elements stripe={stripePromise}>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/products" element={<Products />} />
+          <Route path="/product/:id" element={<ProductDetails />} />
+          <Route path="/cart" element={<Cart />} />
+          <Route path="/checkout" element={<CheckOut />} />
+          <Route path="/thankyou" element={<ThankYou />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<SignUp />} />
+          <Route path="/orders" element={<OrderHistory />} />
+          <Route path="/checkout" element={<Checkout />} />
+        </Routes>
+      </Elements>
       <Footer />
     </div>
   );
