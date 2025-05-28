@@ -4,10 +4,9 @@ import { CartContext } from "../../context/CartContext";
 import "./CheckOut.css";
 import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
 
-const stripe = useStripe();
-const elements = useElements();
-
 const CheckOut = () => {
+  const stripe = useStripe();
+  const elements = useElements();
   const { cart, setCart } = useContext(CartContext);
   const navigate = useNavigate();
 
@@ -18,9 +17,6 @@ const CheckOut = () => {
   const [stateName, setStateName] = useState("");
   const [zip, setZip] = useState("");
   const [country, setCountry] = useState("");
-  const [cardNumber, setCardNumber] = useState("");
-  const [expiry, setExpiry] = useState("");
-  const [cvv, setCvv] = useState("");
 
   const subtotal = cart.reduce(
     (total, item) => total + item.price * item.quantity,
@@ -28,49 +24,60 @@ const CheckOut = () => {
   );
 
   const handlePlaceOrder = async () => {
-    if (
-      !email ||
-      !fullName ||
-      !address ||
-      !city ||
-      !stateName ||
-      !zip ||
-      !country
-    ) {
-      alert("Please fill all required fields.");
+    if (!stripe || !elements) {
+      console.error("Stripe.js has not loaded yet.");
       return;
     }
 
-    const res = await fetch("http://localhost:5000/create-payment-intent", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ amount: Math.round(subtotal * 100) }), // in cents
-    });
+    try {
+      const response = await fetch(
+        "http://localhost:5000/create-payment-intent",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ amount: subtotal * 100 }), // Convert dollars to cents
+        }
+      );
 
-    const { clientSecret } = await res.json();
+      const data = await response.json();
 
-    const result = await stripe.confirmCardPayment(clientSecret, {
-      payment_method: {
-        card: elements.getElement(CardElement),
-        billing_details: {
-          name: fullName,
-          email: email,
-          address: {
-            city: city,
-            line1: address,
-            state: stateName,
-            postal_code: zip,
-            country: country,
+      if (!response.ok) {
+        throw new Error(data.error || "Failed to create payment intent");
+      }
+
+      const clientSecret = data.clientSecret;
+      console.log("Received client secret:", clientSecret);
+
+      const result = await stripe.confirmCardPayment(clientSecret, {
+        payment_method: {
+          card: elements.getElement(CardElement),
+          billing_details: {
+            name: fullName,
+            email: email,
+            address: {
+              line1: address,
+              city: city,
+              state: stateName,
+              postal_code: zip,
+              country: country,
+            },
           },
         },
-      },
-    });
+      });
 
-    if (result.error) {
-      alert(result.error.message);
-    } else if (result.paymentIntent.status === "succeeded") {
-      setCart([]);
-      navigate("/thankyou");
+      if (result.error) {
+        console.error("Payment failed:", result.error.message);
+        alert("Payment failed: " + result.error.message);
+      } else if (result.paymentIntent.status === "succeeded") {
+        console.log("Payment succeeded!");
+        alert("Payment successful!");
+        setCart([]); // clear cart
+        navigate("/success"); // or any confirmation page
+      }
+    } catch (error) {
+      console.error("Error placing order:", error.message);
     }
   };
 

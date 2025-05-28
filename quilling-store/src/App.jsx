@@ -22,20 +22,24 @@ const App = () => {
   return (
     <div className="app">
       <Navbar />
-      <Elements stripe={stripePromise}>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/products" element={<Products />} />
-          <Route path="/product/:id" element={<ProductDetails />} />
-          <Route path="/cart" element={<Cart />} />
-          <Route path="/checkout" element={<CheckOut />} />
-          <Route path="/thankyou" element={<ThankYou />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/signup" element={<SignUp />} />
-          <Route path="/orders" element={<OrderHistory />} />
-          <Route path="/checkout" element={<Checkout />} />
-        </Routes>
-      </Elements>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/products" element={<Products />} />
+        <Route path="/product/:id" element={<ProductDetails />} />
+        <Route path="/cart" element={<Cart />} />
+        <Route
+          path="/checkout"
+          element={
+            <Elements stripe={stripePromise}>
+              <CheckOut />
+            </Elements>
+          }
+        />
+        <Route path="/thankyou" element={<ThankYou />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<SignUp />} />
+        <Route path="/orders" element={<OrderHistory />} />
+      </Routes>
       <Footer />
     </div>
   );
