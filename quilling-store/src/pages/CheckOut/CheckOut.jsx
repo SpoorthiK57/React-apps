@@ -3,6 +3,8 @@ import { useNavigate } from "react-router-dom";
 import { CartContext } from "../../context/CartContext";
 import "./CheckOut.css";
 import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
+import { db } from "../../firebase";
+import { collection, addDoc, Timestamp } from "firebase/firestore";
 
 const CheckOut = () => {
   const stripe = useStripe();
@@ -72,9 +74,26 @@ const CheckOut = () => {
         alert("Payment failed: " + result.error.message);
       } else if (result.paymentIntent.status === "succeeded") {
         console.log("Payment succeeded!");
+
+        // Save the order to Firestore
+        await addDoc(collection(db, "orders"), {
+          email,
+          shipping: {
+            fullName,
+            address,
+            city,
+            state: stateName,
+            zip,
+            country,
+          },
+          items: cart,
+          total: subtotal,
+          createdAt: Timestamp.now(),
+        });
+
         alert("Payment successful!");
         setCart([]); // clear cart
-        navigate("/success"); // or any confirmation page
+        navigate("/thankyou"); // navigate to your ThankYou page
       }
     } catch (error) {
       console.error("Error placing order:", error.message);
