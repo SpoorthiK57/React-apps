@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useContext } from "react";
 import "./OrderHistory.css";
 import { AuthContext } from "../../context/AuthContext";
-import { collection, query, where, getDocs } from "firebase/firestore";
+import { collection, query, where, getDocs, orderBy } from "firebase/firestore";
 import { db } from "../../firebase";
 
 const OrderHistory = () => {
@@ -15,7 +15,12 @@ const OrderHistory = () => {
 
       try {
         const ordersRef = collection(db, "orders");
-        const q = query(ordersRef, where("email", "==", currentUser.email));
+        const q = query(
+          collection(db, "orders"),
+          where("userId", "==", currentUser.uid)
+        );
+        console.log("Current user email:", currentUser.email);
+
         const querySnapshot = await getDocs(q);
 
         const fetchedOrders = querySnapshot.docs.map((doc) => ({

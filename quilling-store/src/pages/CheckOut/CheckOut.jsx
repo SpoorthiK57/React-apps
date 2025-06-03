@@ -5,8 +5,11 @@ import "./CheckOut.css";
 import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
 import { db } from "../../firebase";
 import { collection, addDoc, Timestamp } from "firebase/firestore";
+import { AuthContext } from "../../context/AuthContext";
 
 const CheckOut = () => {
+  const { currentUser } = useContext(AuthContext);
+
   const stripe = useStripe();
   const elements = useElements();
   const { cart, setCart } = useContext(CartContext);
@@ -77,15 +80,9 @@ const CheckOut = () => {
 
         // Save the order to Firestore
         await addDoc(collection(db, "orders"), {
-          email,
-          shipping: {
-            fullName,
-            address,
-            city,
-            state: stateName,
-            zip,
-            country,
-          },
+          email: currentUser.email,
+          userId: currentUser.uid,
+          shipping: { fullName, address, city, state: stateName, zip, country },
           items: cart,
           total: subtotal,
           createdAt: Timestamp.now(),
