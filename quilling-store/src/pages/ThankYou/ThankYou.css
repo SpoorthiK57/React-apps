@@ -63,3 +63,22 @@
 .thank-you-page button:hover {
   background-color: #27682c;
 }
+
+.order-item-image {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-right: 10px;
+}
+
+.order-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.shipping-details, .contact-email {
+  margin-top: 20px;
+}
+

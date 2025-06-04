@@ -79,18 +79,25 @@ const CheckOut = () => {
         console.log("Payment succeeded!");
 
         // Save the order to Firestore
-        await addDoc(collection(db, "orders"), {
+        const orderRef = await addDoc(collection(db, "orders"), {
           email: currentUser.email,
           userId: currentUser.uid,
           shipping: { fullName, address, city, state: stateName, zip, country },
-          items: cart,
+          items: cart.map((item) => ({
+            id: item.id,
+            name: item.name,
+            price: item.price,
+            quantity: item.quantity,
+            image: item.image,
+          })),
           total: subtotal,
           createdAt: Timestamp.now(),
         });
+        const orderId = orderRef.id;
 
         alert("Payment successful!");
         setCart([]); // clear cart
-        navigate("/thankyou"); // navigate to your ThankYou page
+        navigate("/thankyou", { state: { orderId } }); // navigate to your ThankYou page
       }
     } catch (error) {
       console.error("Error placing order:", error.message);
