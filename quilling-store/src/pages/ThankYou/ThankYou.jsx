@@ -34,7 +34,7 @@ const ThankYou = () => {
 
   return (
     <div className="thank-you-page">
-      <h1>Thank You for Your Purchase!</h1>
+      <h2>Thank You for Your Purchase!</h2>
       <p>Your order has been placed successfully.</p>
       <p>A confirmation email has been sent to your inbox.</p>
 

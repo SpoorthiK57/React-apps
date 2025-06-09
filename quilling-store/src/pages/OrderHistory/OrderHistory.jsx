@@ -49,22 +49,37 @@ const OrderHistory = () => {
       ) : (
         <ul>
           {orders.map((order) => (
-            <li key={order.id}>
+            <li key={order.id} className="order-card">
               <p>
                 <strong>Order ID:</strong> {order.id}
               </p>
-              <p>
-                Items:{" "}
+
+              <div className="order-items">
                 {order.items?.map((item, index) => (
-                  <span key={index}>
-                    {item.name} x{item.quantity}
-                    {index < order.items.length - 1 ? ", " : ""}
-                  </span>
+                  <div key={index} className="order-item">
+                    <img
+                      src={item.image}
+                      alt={item.name}
+                      className="item-image"
+                    />
+                    <div>
+                      <p>
+                        <strong>{item.name}</strong> × {item.quantity}
+                      </p>
+                      <p>${(item.price * item.quantity).toFixed(2)}</p>
+                    </div>
+                  </div>
                 ))}
-              </p>
+              </div>
 
               <p>
-                Date:{" "}
+                <strong>Total:</strong> ${order.total.toFixed(2)}
+              </p>
+              <p>
+                <strong>Status:</strong> {order.status || "Confirmed"}
+              </p>
+              <p>
+                <strong>Date:</strong>{" "}
                 {order.createdAt.toDate().toLocaleDateString("en-US", {
                   year: "numeric",
                   month: "long",

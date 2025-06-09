@@ -11,7 +11,7 @@
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-.thank-you-page h1 {
+.thank-you-page h2 {
   font-size: 2rem;
   color: #2e7d32;
   margin-bottom: 1rem;
@@ -49,7 +49,7 @@
 }
 
 .thank-you-page button {
-  margin-top: 2rem;
+  margin-top: 1rem;
   padding: 0.75rem 1.5rem;
   font-size: 1rem;
   background-color: #2e7d32;
@@ -79,6 +79,6 @@
 }
 
 .shipping-details, .contact-email {
-  margin-top: 20px;
+  margin-top: 15px;
 }
 
