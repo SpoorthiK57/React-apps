@@ -34,13 +34,11 @@ const CheckOut = () => {
 
     try {
       const response = await fetch(
-        "http://localhost:5000/create-payment-intent",
+        "http://localhost:5000/api/payments/create-payment-intent",
         {
           method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ amount: subtotal * 100 }), // Convert dollars to cents
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ amount: subtotal * 100 }),
         }
       );
 
@@ -113,7 +111,8 @@ const CheckOut = () => {
 
         alert("Payment successful!");
         setCart([]); // clear cart
-        navigate("/thankyou", { state: { orderId } }); // navigate to your ThankYou page
+        console.log("Redirecting with orderId:", orderData._id);
+        navigate("/thankyou", { state: { orderId: orderData._id } }); // navigate to your ThankYou page
       }
     } catch (error) {
       console.error("Error placing order:", error.message);

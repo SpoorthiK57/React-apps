@@ -1,8 +1,6 @@
 import React, { useEffect, useState, useContext } from "react";
 import "./OrderHistory.css";
 import { AuthContext } from "../../context/AuthContext";
-import { collection, query, where, getDocs, orderBy } from "firebase/firestore";
-import { db } from "../../firebase";
 
 const OrderHistory = () => {
   const { currentUser } = useContext(AuthContext);
@@ -14,25 +12,17 @@ const OrderHistory = () => {
       if (!currentUser) return;
 
       try {
-        const ordersRef = collection(db, "orders");
-        const q = query(
-          collection(db, "orders"),
-          where("userId", "==", currentUser.uid)
+        const response = await fetch(
+          `http://localhost:5000/api/orders/user/${currentUser.uid}`
         );
-        console.log("Current user email:", currentUser.email);
+        if (!response.ok) throw new Error("Failed to fetch orders");
 
-        const querySnapshot = await getDocs(q);
-
-        const fetchedOrders = querySnapshot.docs.map((doc) => ({
-          id: doc.id,
-          ...doc.data(),
-        }));
-
-        setOrders(fetchedOrders);
+        const data = await response.json();
+        setOrders(data);
       } catch (error) {
         console.error("Error fetching orders:", error);
       } finally {
-        setLoading(false); // stop loading in both success/fail
+        setLoading(false);
       }
     };
 
@@ -49,9 +39,9 @@ const OrderHistory = () => {
       ) : (
         <ul>
           {orders.map((order) => (
-            <li key={order.id} className="order-card">
+            <li key={order._id} className="order-card">
               <p>
-                <strong>Order ID:</strong> {order.id}
+                <strong>Order ID:</strong> {order._id}
               </p>
 
               <div className="order-items">
@@ -80,7 +70,7 @@ const OrderHistory = () => {
               </p>
               <p>
                 <strong>Date:</strong>{" "}
-                {order.createdAt.toDate().toLocaleDateString("en-US", {
+                {new Date(order.createdAt).toLocaleDateString("en-US", {
                   year: "numeric",
                   month: "long",
                   day: "numeric",
