@@ -3,8 +3,6 @@ import { useNavigate } from "react-router-dom";
 import { CartContext } from "../../context/CartContext";
 import "./CheckOut.css";
 import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
-import { db } from "../../firebase";
-import { collection, addDoc, Timestamp } from "firebase/firestore";
 import { AuthContext } from "../../context/AuthContext";
 
 const CheckOut = () => {
@@ -78,22 +76,40 @@ const CheckOut = () => {
       } else if (result.paymentIntent.status === "succeeded") {
         console.log("Payment succeeded!");
 
-        // Save the order to Firestore
-        const orderRef = await addDoc(collection(db, "orders"), {
-          email: currentUser.email,
-          userId: currentUser.uid,
-          shipping: { fullName, address, city, state: stateName, zip, country },
-          items: cart.map((item) => ({
-            id: item.id,
-            name: item.name,
-            price: item.price,
-            quantity: item.quantity,
-            image: item.image,
-          })),
-          total: subtotal,
-          createdAt: Timestamp.now(),
+        const orderResponse = await fetch("http://localhost:5000/api/orders", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            email: currentUser.email,
+            userId: currentUser.uid,
+            shipping: {
+              fullName,
+              address,
+              city,
+              state: stateName,
+              zip,
+              country,
+            },
+            items: cart.map((item) => ({
+              id: item.id,
+              name: item.name,
+              price: item.price,
+              quantity: item.quantity,
+              image: item.image,
+            })),
+            total: subtotal,
+          }),
         });
-        const orderId = orderRef.id;
+
+        const orderData = await orderResponse.json();
+
+        if (!orderResponse.ok) {
+          throw new Error(orderData.error || "Failed to save order");
+        }
+
+        const orderId = orderData._id;
 
         alert("Payment successful!");
         setCart([]); // clear cart

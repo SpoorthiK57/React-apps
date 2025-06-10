@@ -1,39 +1,28 @@
 const express = require("express");
-const cors = require("cors");
+const mongoose = require("mongoose");
 const dotenv = require("dotenv");
-const Stripe = require("stripe");
-
-require("dotenv").config();
+const cors = require("cors");
 
 dotenv.config();
 
+const orderRoutes = require("./routes/orderRoutes");
+
 const app = express();
-const stripe = Stripe(process.env.STRIPE_SECRET_KEY);
-
 app.use(cors());
-app.use(express.json());
+app.use(express.json()); // for parsing JSON
 
-app.get("/", (req, res) => {
-  res.send("Server is up and running!");
+// Connect to MongoDB
+mongoose.connect(process.env.MONGO_URI, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+})
+.then(() => console.log("MongoDB connected"))
+.catch((err) => console.error("MongoDB connection failed:", err));
+
+// Routes
+app.use("/api/orders", orderRoutes);
+
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
 });
-
-// Sample endpoint to create payment intent
-app.post("/create-payment-intent", async (req, res) => {
-  const { amount } = req.body;
-
-
-  try {
-    const paymentIntent = await stripe.paymentIntents.create({
-      amount,
-      currency: "usd",
-    });
-
-    res.send({
-      clientSecret: paymentIntent.client_secret,
-    });
-  } catch (err) {
-    res.status(400).send({ error: err.message });
-  }
-});
-
-app.listen(5000, () => console.log("Server running on http://localhost:5000"));
