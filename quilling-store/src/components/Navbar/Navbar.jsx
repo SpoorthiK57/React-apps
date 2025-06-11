@@ -7,6 +7,8 @@ import { AuthContext } from "../../context/AuthContext";
 
 const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false); // for mobile toggle
+
   useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 0);
@@ -14,6 +16,7 @@ const Navbar = () => {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
   const { cart } = useContext(CartContext);
   const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
   const { currentUser } = useContext(AuthContext);
@@ -21,13 +24,20 @@ const Navbar = () => {
   return (
     <div className={`navbar ${scrolled ? "scrolled" : ""}`}>
       <div className="left">
-        <img src={quilling_wonderland} alt="" className="logo" />
+        <img src={quilling_wonderland} alt="logo" className="logo" />
         <h2>Paper Quills</h2>
       </div>
-      <ul className="list">
+
+      {/* Hamburger Icon for mobile */}
+      <div className="hamburger" onClick={() => setMenuOpen(!menuOpen)}>
+        ☰
+      </div>
+
+      <ul className={`list ${menuOpen ? "open" : ""}`}>
         <li>
           <NavLink
             to="/"
+            onClick={() => setMenuOpen(false)}
             className={({ isActive }) => (isActive ? "active-link" : "")}
           >
             Home
@@ -36,6 +46,7 @@ const Navbar = () => {
         <li>
           <NavLink
             to="/products"
+            onClick={() => setMenuOpen(false)}
             className={({ isActive }) => (isActive ? "active-link" : "")}
           >
             Products
@@ -44,6 +55,7 @@ const Navbar = () => {
         <li>
           <NavLink
             to="/About"
+            onClick={() => setMenuOpen(false)}
             className={({ isActive }) => (isActive ? "active-link" : "")}
           >
             About
@@ -52,12 +64,14 @@ const Navbar = () => {
         <li>
           <NavLink
             to="/Contact"
+            onClick={() => setMenuOpen(false)}
             className={({ isActive }) => (isActive ? "active-link" : "")}
           >
             Contact
           </NavLink>
         </li>
       </ul>
+
       <div className="right">
         <div className="cart">
           <NavLink to="/cart">
@@ -65,7 +79,6 @@ const Navbar = () => {
           </NavLink>
           <span className="cart-count">{totalItems}</span>
         </div>
-
         <div className="login">
           <NavLink to="/login">
             <button className="login-button">Login</button>

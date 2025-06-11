@@ -110,5 +110,53 @@
     border-radius: 50%;
     font-weight: bold;
   }
-  
+  /* Mobile Navigation */
+.hamburger {
+  display: none;
+  font-size: 28px;
+  cursor: pointer;
+  color: black;
+}
+
+/* Initially hide nav items on small screens */
+@media (max-width: 768px) {
+  .hamburger {
+    display: block;
+  }
+
+  .list {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    flex-direction: column;
+    background-color: bisque;
+    padding: 10px 0;
+    z-index: 1000;
+  }
+
+  .list.open {
+    display: flex;
+  }
+
+  .list li {
+    padding: 10px;
+  }
+
+  .right {
+    display: none; /* hide cart & login on small screens */
+  }
+
+  .navbar {
+    flex-wrap: wrap;
+  }
+
+  .left {
+    width: 100%;
+    justify-content: space-between;
+    padding-right: 10px;
+  }
+}
+
   
