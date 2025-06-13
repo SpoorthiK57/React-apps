@@ -1,162 +1,198 @@
+/* Navbar Base */
 .navbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
-    padding: 10px 20px;
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 1000;
-    color: white;
-    transition: background-color 0.3s, box-shadow 0.3s;
-  }
-  
-  .navbar.scrolled {
-    background-color: bisque; /* Lighten the navbar */
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Add a shadow */
-  }
-  .navbar:hover{
-    background-color: bisque;
-  }
-  
-  .left {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
-  
-  .logo {
-    width: 80px;
-    height: 80px;
-    border-radius: 137px;
-  }
-  
-  h2 {
-    font-size: 30px;
-    color: black;
-  }
-  
-  .list {
-    display: flex;
-    gap: 112px;
-    color: black;
-    list-style: none;
-    margin: 0;
-    font-weight: 500;
-    font-style: bold;
-  }
-  
-  .list li {
-    display: inline-block;
-    font-style: bold;
-  }
-  .active-link.active{
-    border-bottom: 2px solid black;
-  }
-  
-  .active-link {
-    text-decoration: underline;
-    text-underline-offset: 3px;
-    color: black;
-    font-size: 16px;
-    font-weight: bold;
-    transition: color 0.3s;
-    cursor: pointer;
-  }
-  
-  .link:hover {
-    color: #ff6347; /* Or any color you like */
-  }
-  
-  .right {
-    display: flex;
-    align-items: center;
-    gap: 40px;
-  }
-  
-  .cart{
-    position: relative;
-  }
-  .login {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 5px;
-  }
-  
-  .login-button {
-    padding: 5px 10px;
-    border: none;
-    cursor: pointer;
-    border-radius: 5px;
-  }
-  .cart-icon {
-    position: relative;
-    display: inline-block;
-    width: 75px;
-    height: auto;
-    cursor: pointer;
-  }
-  
-  .cart-count {
-    position: absolute;
-    top: 0px;
-    right: 18px;
-    background: red;
-    color: white;
-    font-size: 12px;
-    padding: 2px 6px;
-    border-radius: 50%;
-    font-weight: bold;
-  }
-  /* Mobile Navigation */
-.hamburger {
-  display: none;
-  font-size: 28px;
-  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 10px 20px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+  color: white;
+  transition: background-color 0.3s, box-shadow 0.3s;
+}
+
+.navbar.scrolled {
+  background-color: bisque;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.navbar:hover {
+  background-color: bisque;
+}
+
+/* Left Section */
+.left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.logo {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+}
+
+h2 {
+  font-size: 30px;
   color: black;
 }
 
-/* Initially hide nav items on small screens */
+/* Navigation Links */
+.list {
+  display: flex;
+  gap: 40px;
+  color: black;
+  list-style: none;
+  margin: 0;
+  font-weight: bold;
+}
+
+.list li {
+  display: inline-block;
+}
+
+.active-link.active {
+  border-bottom: 2px solid black;
+}
+
+.active-link {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  color: black;
+  font-size: 16px;
+  font-weight: bold;
+  transition: color 0.3s;
+}
+
+.active-link:hover {
+  color: #ff6347;
+}
+
+/* Right Section */
+.right {
+  display: flex;
+  align-items: center;
+  gap: 40px;
+}
+
+.cart {
+  position: relative;
+}
+
+.login {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+}
+
+.login-button {
+  padding: 5px 10px;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.cart-icon {
+  position: relative;
+  display: inline-block;
+  width: 75px;
+  height: auto;
+  cursor: pointer;
+}
+
+.cart-count {
+  position: absolute;
+  top: 0px;
+  right: 18px;
+  background: red;
+  color: white;
+  font-size: 12px;
+  padding: 2px 6px;
+  border-radius: 50%;
+  font-weight: bold;
+}
+
+/* Mobile Navigation */
+.hamburger {
+  display: none;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+.nav-menu {
+  display: flex;
+  align-items: center;
+}
+
+.mobile-only {
+  display: none;
+}
+
+/* Responsive Styles */
 @media (max-width: 768px) {
   .hamburger {
     display: block;
   }
 
-  .list {
-    display: none;
+  .nav-menu {
     position: absolute;
     top: 100%;
     left: 0;
-    width: 100%;
+    right: 0;
+    background: bisque;
     flex-direction: column;
-    background-color: bisque;
-    padding: 10px 0;
-    z-index: 1000;
+    align-items: center;
+    display: none;
+    transition: all 0.3s ease-in-out;
   }
 
-  .list.open {
+  .nav-menu.open {
     display: flex;
   }
 
-  .list li {
-    padding: 10px;
+  .list {
+    flex-direction: column;
+    gap: 15px;
   }
 
-  .right {
-    display: none; /* hide cart & login on small screens */
+  .desktop-only {
+    display: none !important;
   }
 
-  .navbar {
-    flex-wrap: wrap;
+  .mobile-only {
+    display: block !important;
   }
 
-  .left {
-    width: 100%;
-    justify-content: space-between;
-    padding-right: 10px;
+  .cart-icon {
+    width: 40px;
+  }
+
+  .cart-count {
+    font-size: 10px;
+    padding: 2px 4px;
+    top: 136px;
+    right: 185px;
+  }
+
+  .login-button {
+    font-size: 0.9rem;
+    padding: 8px 12px;
   }
 }
 
-  
+/* Ensure correct visibility */
+@media (min-width: 769px) {
+  .mobile-only {
+    display: none !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .desktop-only {
+    display: none !important;
+  }
+}
