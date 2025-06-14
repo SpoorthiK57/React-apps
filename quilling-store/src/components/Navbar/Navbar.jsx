@@ -78,8 +78,10 @@ const Navbar = () => {
           {/* Mobile-only Cart & Login */}
           <li className="mobile-only">
             <NavLink to="/cart" className="cart-link" onClick={closeMenu}>
-              <img src="/assets/cart_log.png" className="cart-icon" />
-              <span className="cart-count">{totalItems}</span>
+              <div className="cart">
+                <img src="/assets/cart_log.png" className="cart-icon" />
+                <span className="cart-count">{totalItems}</span>
+              </div>
             </NavLink>
           </li>
           <li className="mobile-only">
@@ -95,8 +97,8 @@ const Navbar = () => {
         <div className="cart">
           <NavLink to="/cart">
             <img src="/assets/cart_log.png" className="cart-icon" />
+            <span className="cart-count">{totalItems}</span>
           </NavLink>
-          <span className="cart-count">{totalItems}</span>
         </div>
         <div className="login">
           <NavLink to="/login">

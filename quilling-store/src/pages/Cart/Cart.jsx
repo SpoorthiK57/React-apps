@@ -37,7 +37,11 @@ const Cart = () => {
                   <p className="product-desc">{item.description}</p>
                 </div>
               </div>
+
+              {/* Unit Price */}
               <span>${parseFloat(item.price).toFixed(2)}</span>
+
+              {/* Quantity Controls + Remove Button */}
               <div className="quantity-controls">
                 <button
                   onClick={() => updateQuantity(item.id, item.quantity - 1)}
@@ -57,17 +61,21 @@ const Cart = () => {
                   Remove
                 </button>
               </div>
+
+              {/* Total per item */}
               <span>
-                ${(item.quantity * parseFloat(item.price)).toFixed(2)}
+                ${(parseFloat(item.price) * item.quantity).toFixed(2)}
               </span>
             </div>
           ))}
 
           <div className="cart-footer">
             <div className="cart-actions">
-              <span>UPDATE CART</span> |{" "}
-              <Link to="/products">Continue shopping</Link>
+              <Link to="/products">
+                Continue shopping <span>&rarr;</span>
+              </Link>
             </div>
+
             <div className="cart-subtotal">
               <h3>Subtotal</h3>
               <p className="subtotal-amount">${calculateTotal()}</p>
