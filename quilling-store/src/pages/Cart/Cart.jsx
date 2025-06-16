@@ -38,13 +38,23 @@ const Cart = () => {
                 </div>
               </div>
 
-              {/* Unit Price */}
-              <span>${parseFloat(item.price).toFixed(2)}</span>
+              {/* Price (desktop) */}
+              <span className="price-value">
+                ${parseFloat(item.price).toFixed(2)}
+              </span>
+
+              {/* Price (mobile) */}
+              <div className="mobile-label">
+                <span className="label-text">Price:</span>
+                <span>${parseFloat(item.price).toFixed(2)}</span>
+              </div>
 
               {/* Quantity Controls + Remove Button */}
               <div className="quantity-controls">
                 <button
                   onClick={() => updateQuantity(item.id, item.quantity - 1)}
+                  disabled={item.quantity <= 1}
+                  className={item.quantity <= 1 ? "disabled-btn" : ""}
                 >
                   -
                 </button>
@@ -62,10 +72,18 @@ const Cart = () => {
                 </button>
               </div>
 
-              {/* Total per item */}
-              <span>
+              {/* Total (desktop) */}
+              <span className="total-value">
                 ${(parseFloat(item.price) * item.quantity).toFixed(2)}
               </span>
+
+              {/* Total (mobile) */}
+              <div className="mobile-label">
+                <span className="label-text">Total:</span>
+                <span>
+                  ${(parseFloat(item.price) * item.quantity).toFixed(2)}
+                </span>
+              </div>
             </div>
           ))}
 

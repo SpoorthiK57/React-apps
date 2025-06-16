@@ -80,6 +80,10 @@
   border-radius: 4px;
   transition: all 0.2s ease;
 }
+.quantity-controls .disabled-btn {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
 
 .quantity-controls button:hover {
   background-color: #f2f2f2;
@@ -184,8 +188,25 @@
   width: 90px;
   height: auto;
 }
+.price-value,
+.total-value {
+  display: inline;
+}
 
-/* ✅ Responsive Styles */
+@media screen and (max-width: 768px) {
+  .price-value,
+  .total-value {
+    display: none;
+  }
+
+  .mobile-label {
+    display: flex;
+    justify-content: center;
+    gap: 6px;
+    font-size: 14px;
+    margin-top: 8px;
+  }
+}
 @media screen and (max-width: 768px) {
   .cart-header-row {
     display: none;
@@ -214,7 +235,7 @@
   .quantity-controls {
     margin-top: 10px;
     justify-content: center;
-    flex-direction: column;
+    flex-direction: row;
   }
 
   .cart-subtotal {
