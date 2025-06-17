@@ -1,55 +1,93 @@
 .thank-you-page {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-top: 80px;
-  justify-content: center;
-  padding: 3rem 1rem;
-  background-color: #f4f4f4;
-  min-height: 80vh;
+  max-width: 500px;
+  margin: 98px auto;
+  padding: 2rem 1rem;
   text-align: center;
+  background-color: #f9f9f9;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .thank-you-page h2 {
-  font-size: 2rem;
+  font-size: 1.8rem;
   color: #2e7d32;
+  margin-bottom: 0.5rem;
+}
+
+.section-title {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin: 2rem 0 1rem;
+  color: #222;
+}
+
+.order-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #fff;
+  padding: 1rem;
+  border-radius: 8px;
   margin-bottom: 1rem;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
 }
 
-.thank-you-page p {
-  font-size: 1.1rem;
-  color: #444;
-  margin-bottom: 0.8rem;
+.order-item-image {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  border-radius: 6px;
 }
 
-.order-summary {
-  background-color: #fff;
-  border-radius: 10px;
-  padding: 1.5rem;
-  margin-top: 2rem;
-  width: 100%;
-  max-width: 500px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+.order-item-details {
+  flex-grow: 1;
+  margin-left: 10px;
   text-align: left;
 }
 
-.order-summary h2 {
-  font-size: 1.4rem;
-  margin-bottom: 1rem;
+.order-item-price {
+  font-weight: bold;
+  text-align: right;
   color: #333;
 }
 
-.summary-item {
+.product-subtext {
+  font-size: 0.85rem;
+  color: #777;
+}
+
+.payment-summary {
+  background: #fff;
+  padding: 1rem;
+  border-radius: 8px;
+  margin-top: 1rem;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+}
+
+.summary-row {
   display: flex;
   justify-content: space-between;
-  margin-bottom: 0.6rem;
+  margin-bottom: 0.75rem;
   font-size: 1rem;
-  color: #555;
+  color: #444;
+}
+
+.total-row {
+  font-size: 1.1rem;
+  color: #2e7d32;
+  font-weight: bold;
+}
+
+.info-card {
+  background-color: #fff;
+  padding: 1rem;
+  margin-top: 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+  text-align: left;
 }
 
 .thank-you-page button {
-  margin-top: 1rem;
+  margin-top: 2rem;
   padding: 0.75rem 1.5rem;
   font-size: 1rem;
   background-color: #2e7d32;
@@ -57,28 +95,9 @@
   border: none;
   border-radius: 6px;
   cursor: pointer;
-  transition: background-color 0.3s;
+  transition: background-color 0.3s ease;
 }
 
 .thank-you-page button:hover {
   background-color: #27682c;
 }
-
-.order-item-image {
-  width: 80px;
-  height: 80px;
-  object-fit: cover;
-  border-radius: 8px;
-  margin-right: 10px;
-}
-
-.order-item {
-  display: flex;
-  align-items: center;
-  margin-bottom: 15px;
-}
-
-.shipping-details, .contact-email {
-  margin-top: 15px;
-}
-
