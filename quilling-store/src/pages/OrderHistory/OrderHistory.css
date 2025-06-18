@@ -45,3 +45,42 @@
   object-fit: cover;
   border-radius: 8px;
 }
+@media (max-width: 768px) {
+  .OrderHistory {
+    padding: 1rem;
+    margin: 90px 1rem;
+  }
+
+  .order-card {
+    padding: 1rem;
+  }
+
+  .order-items {
+    gap: 10px;
+  }
+
+  .order-item {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .item-image {
+    width: 50px;
+    height: 50px;
+  }
+}
+
+@media (max-width: 480px) {
+  .OrderHistory h2 {
+    font-size: 1.5rem;
+  }
+
+  .order-card p {
+    font-size: 0.9rem;
+  }
+
+  .order-item p {
+    font-size: 0.9rem;
+  }
+}

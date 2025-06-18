@@ -11,7 +11,9 @@ const Navbar = () => {
 
   const { cart } = useContext(CartContext);
   const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
-  const { currentUser } = useContext(AuthContext);
+
+  // Get currentUser and logout from auth context
+  const { currentUser, logout } = useContext(AuthContext);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -75,7 +77,8 @@ const Navbar = () => {
               Contact
             </NavLink>
           </li>
-          {/* Mobile-only Cart & Login */}
+
+          {/* Mobile-only Cart */}
           <li className="mobile-only">
             <NavLink to="/cart" className="cart-link" onClick={closeMenu}>
               <div className="cart">
@@ -84,15 +87,28 @@ const Navbar = () => {
               </div>
             </NavLink>
           </li>
+
+          {/* Mobile-only Login / Logout */}
           <li className="mobile-only">
-            <NavLink to="/login" onClick={closeMenu}>
-              <button className="login-button">Login</button>
-            </NavLink>
+            {currentUser ? (
+              <>
+                <span className="welcome-text">
+                  Welcome, {currentUser.email || "User"}
+                </span>
+                <button className="logout-button" onClick={logout}>
+                  Logout
+                </button>
+              </>
+            ) : (
+              <NavLink to="/login" onClick={closeMenu}>
+                <button className="login-button">Login</button>
+              </NavLink>
+            )}
           </li>
         </ul>
       </div>
 
-      {/* Desktop-only Cart & Login */}
+      {/* Desktop-only Cart & Login/Logout */}
       <div className="right desktop-only">
         <div className="cart">
           <NavLink to="/cart">
@@ -101,9 +117,20 @@ const Navbar = () => {
           </NavLink>
         </div>
         <div className="login">
-          <NavLink to="/login">
-            <button className="login-button">Login</button>
-          </NavLink>
+          {currentUser ? (
+            <>
+              <span className="welcome-text">
+                Welcome, {currentUser.email || "User"}
+              </span>
+              <button className="logout-button" onClick={logout}>
+                Logout
+              </button>
+            </>
+          ) : (
+            <NavLink to="/login">
+              <button className="login-button">Login</button>
+            </NavLink>
+          )}
         </div>
       </div>
     </div>

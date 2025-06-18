@@ -54,4 +54,19 @@
   .signup-container a:hover {
     text-decoration: underline;
   }
-  
+  @media (max-width: 480px) {
+  .signup-container {
+    margin: 100px 1rem;
+    padding: 1.5rem;
+  }
+
+  .signup-container input,
+  .signup-container button {
+    padding: 0.65rem;
+    font-size: 0.95rem;
+  }
+
+  .signup-container h2 {
+    font-size: 1.25rem;
+  }
+}

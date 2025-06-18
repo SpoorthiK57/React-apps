@@ -19,21 +19,22 @@ app.use(express.json()); // Parses incoming JSON payloads
 
 // MongoDB Connection with Error Handling
 mongoose.connect(process.env.MONGO_URI)
-  .then(() => console.log("✅ MongoDB connected"))
+  .then(() => console.log("MongoDB connected"))
   .catch((err) => {
-    console.error("❌ MongoDB connection failed:", err);
+    console.error("MongoDB connection failed:", err);
     process.exit(1); // Exit process if MongoDB connection fails
   });
 
 // Logging Middleware for API Requests
 app.use((req, res, next) => {
-  console.log(`📢 [${req.method}] ${req.url}`);
+  console.log(`[${req.method}] ${req.url}`);
   next();
 });
 
 // Routes
 app.use("/api/orders", orderRoutes);
 app.use("/api/payments", paymentRoutes); // Added payment integration route
+app.use('/api/auth', authRoutes); 
 
 // Catch-All 404 Route
 app.use((req, res) => {
@@ -43,5 +44,5 @@ app.use((req, res) => {
 // Server Initialization
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
-  console.log(`🚀 Server running on port ${PORT}`);
+  console.log(`Server running on port ${PORT}`);
 });
