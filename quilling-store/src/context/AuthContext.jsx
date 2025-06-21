@@ -1,42 +1,32 @@
-import React, { createContext, useContext, useState, useEffect } from "react";
-import jwtDecode from "jwt-decode";
+import React, { createContext, useState, useEffect, useContext } from "react";
+import { jwtDecode } from "jwt-decode";
 
 export const AuthContext = createContext(null);
 
 export const AuthProvider = ({ children }) => {
+  const [token, setToken] = useState(null);
   const [currentUser, setCurrentUser] = useState(null);
 
-  // Load user from token if available
   useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (token) {
+    const storedToken = localStorage.getItem("authToken");
+    if (storedToken) {
       try {
-        const decoded = jwtDecode(token);
-        setCurrentUser(decoded); // decoded contains { id, email, ... }
+        const decoded = jwtDecode(storedToken);
+        setCurrentUser(decoded);
+        setToken(storedToken);
       } catch (err) {
         console.error("Invalid token:", err);
-        localStorage.removeItem("token");
+        localStorage.removeItem("authToken");
       }
     }
   }, []);
 
-  const login = (token) => {
-    localStorage.setItem("token", token);
-    const decoded = jwtDecode(token);
-    setCurrentUser(decoded);
-  };
-
-  const logout = () => {
-    localStorage.removeItem("token");
-    setCurrentUser(null);
-  };
-
   return (
-    <AuthContext.Provider value={{ currentUser, login, logout }}>
+    <AuthContext.Provider value={{ token, setToken, currentUser }}>
       {children}
     </AuthContext.Provider>
   );
 };
 
-// Custom hook
+// Custom hook for accessing auth
 export const useAuth = () => useContext(AuthContext);

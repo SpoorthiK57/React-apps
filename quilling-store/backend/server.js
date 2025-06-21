@@ -4,10 +4,12 @@ const dotenv = require("dotenv");
 const cors = require("cors");
 const paymentRoutes = require("./routes/paymentRoutes"); // Added payment routes
 const orderRoutes = require("./routes/orderRoutes");
+const authRoutes = require('./routes/authRoutes');
 
 dotenv.config();
 
 const app = express();
+app.use(express.json()); // Parses incoming JSON payloads
 
 // Middleware
 app.use(cors({
@@ -15,7 +17,6 @@ app.use(cors({
   methods: ["GET", "POST", "PUT"],
   credentials: true
 }));
-app.use(express.json()); // Parses incoming JSON payloads
 
 // MongoDB Connection with Error Handling
 mongoose.connect(process.env.MONGO_URI)

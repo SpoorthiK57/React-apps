@@ -1,13 +1,23 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import { AuthContext } from "../../context/AuthContext";
+import { useAuth } from "../../context/AuthContext";
 import { setAuthToken } from "../../helpers/auth";
+import "./Login.css";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [checked, setChecked] = useState(false);
   const navigate = useNavigate();
-  const { setToken } = useContext(AuthContext);
+  const { setToken, setCurrentUser } = useAuth();
+
+  useEffect(() => {
+    const savedEmail = localStorage.getItem("rememberedEmail");
+    if (savedEmail) {
+      setEmail(savedEmail);
+      setChecked(true);
+    }
+  }, []);
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -20,8 +30,18 @@ const Login = () => {
 
       const data = await response.json();
       if (response.ok) {
+        // Save token to localStorage
         setAuthToken(data.token);
         setToken(data.token);
+        setCurrentUser(data.user);
+
+        // Save email if Remember Me is checked
+        if (checked) {
+          localStorage.setItem("rememberedEmail", email);
+        } else {
+          localStorage.removeItem("rememberedEmail");
+        }
+
         alert("Login successful!");
         navigate("/");
       } else {
@@ -29,6 +49,7 @@ const Login = () => {
       }
     } catch (error) {
       console.error("Login error:", error);
+      alert("Login failed. Try again.");
     }
   };
 
@@ -38,20 +59,30 @@ const Login = () => {
       <form onSubmit={handleLogin}>
         <input
           type="email"
+          placeholder="Email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          placeholder="Email"
           required
         />
         <input
           type="password"
+          placeholder="Password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-          placeholder="Password"
           required
         />
+        <input
+          type="checkbox"
+          id="remember"
+          checked={checked}
+          onChange={(e) => setChecked(e.target.checked)}
+        />
+        <label htmlFor="remember">Remember me</label>
         <button type="submit">Login</button>
       </form>
+      <p>
+        Don’t have an account? <a href="/signup">Sign up</a>
+      </p>
     </div>
   );
 };

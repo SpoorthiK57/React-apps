@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import "./SignUp.css";
 
 const SignUp = () => {
   const [email, setEmail] = useState("");
@@ -14,7 +15,11 @@ const SignUp = () => {
       const response = await fetch("http://localhost:5000/api/auth/signup", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, password, firstName, lastName }),
+        body: JSON.stringify({
+          name: `${firstName} ${lastName}`,
+          email,
+          password,
+        }),
       });
 
       const data = await response.json();
@@ -62,6 +67,9 @@ const SignUp = () => {
           required
         />
         <button type="submit">Sign Up</button>
+        <p>
+          Already have an account? <a href="/login">Login here</a>
+        </p>
       </form>
     </div>
   );
