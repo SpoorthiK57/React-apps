@@ -50,7 +50,7 @@ const ThankYou = () => {
       <div className="payment-summary">
         <div className="summary-row">
           <span>Subtotal</span>
-          <span>${order.subtotal?.toFixed(2) || "0.00"}</span>
+          <span>${order.subtotal?.toFixed(2)}</span>
         </div>
         <div className="summary-row">
           <span>Shipping</span>

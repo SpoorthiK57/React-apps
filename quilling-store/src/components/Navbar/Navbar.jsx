@@ -117,20 +117,9 @@ const Navbar = () => {
           </NavLink>
         </div>
         <div className="login">
-          {currentUser ? (
-            <>
-              <span className="welcome-text">
-                Welcome, {currentUser.email || "User"}
-              </span>
-              <button className="logout-button" onClick={logout}>
-                Logout
-              </button>
-            </>
-          ) : (
-            <NavLink to="/login">
-              <button className="login-button">Login</button>
-            </NavLink>
-          )}
+          <NavLink to={currentUser ? "/account" : "/login"}>
+            <button className="login-button">Login</button>
+          </NavLink>
         </div>
       </div>
     </div>

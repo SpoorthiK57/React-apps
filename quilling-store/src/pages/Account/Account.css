@@ -1,0 +1,19 @@
+.account-page {
+  padding: 2rem;
+  max-width: 600px;
+  margin: 100px auto;
+}
+.account-page ul {
+  list-style: none;
+  padding: 0;
+}
+.account-page li {
+  margin: 1rem 0;
+}
+.account-page button {
+  background: #f44336;
+  color: white;
+  padding: 0.5rem 1rem;
+  border: none;
+  cursor: pointer;
+}

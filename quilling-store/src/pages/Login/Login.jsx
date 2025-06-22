@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import { setAuthToken } from "../../helpers/auth";
 import "./Login.css";
+import { jwtDecode } from "jwt-decode";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -32,8 +33,10 @@ const Login = () => {
       if (response.ok) {
         // Save token to localStorage
         setAuthToken(data.token);
-        setToken(data.token);
-        setCurrentUser(data.user);
+        setToken(data.token); // update context
+        const decoded = jwtDecode(data.token);
+        setCurrentUser(decoded);
+        localStorage.setItem("currentUser", JSON.stringify(decoded));
 
         // Save email if Remember Me is checked
         if (checked) {

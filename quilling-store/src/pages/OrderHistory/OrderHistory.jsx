@@ -10,10 +10,11 @@ const OrderHistory = () => {
   useEffect(() => {
     const fetchOrders = async () => {
       if (!currentUser) return;
+      console.log("Current User in OrderHistory:", currentUser);
 
       try {
         const response = await fetch(
-          `http://localhost:5000/api/orders/user/${currentUser.uid}`
+          `http://localhost:5000/api/orders/user/${currentUser.id}`
         );
         if (!response.ok) throw new Error("Failed to fetch orders");
 

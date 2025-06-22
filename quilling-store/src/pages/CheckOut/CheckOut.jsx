@@ -74,31 +74,33 @@ const CheckOut = () => {
       } else if (result.paymentIntent.status === "succeeded") {
         console.log("Payment succeeded!");
 
+        const orderPayload = {
+          email,
+          userId: currentUser?._id || currentUser?._id || currentUser?.id,
+          shipping: {
+            fullName,
+            address,
+            city,
+            state: stateName,
+            zip,
+            country,
+          },
+          items: cart.map((item) => ({
+            name: item.name,
+            image: item.image,
+            price: Number(item.price),
+            quantity: Number(item.quantity),
+          })),
+          total: Number(subtotal.toFixed(2)),
+        };
+
+        console.log("Sending order payload:", orderPayload);
         const orderResponse = await fetch("http://localhost:5000/api/orders", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({
-            email: currentUser.email,
-            userId: currentUser.uid,
-            shipping: {
-              fullName,
-              address,
-              city,
-              state: stateName,
-              zip,
-              country,
-            },
-            items: cart.map((item) => ({
-              id: item.id,
-              name: item.name,
-              price: item.price,
-              quantity: item.quantity,
-              image: item.image,
-            })),
-            total: subtotal,
-          }),
+          body: JSON.stringify(orderPayload),
         });
 
         const orderData = await orderResponse.json();
