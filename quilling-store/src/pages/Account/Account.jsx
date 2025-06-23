@@ -25,6 +25,7 @@ const Account = () => {
   if (loading) {
     return <p>Loading...</p>;
   }
+  console.log("Current user:", currentUser);
 
   return (
     <div className="account-page">

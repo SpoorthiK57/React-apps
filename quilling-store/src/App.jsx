@@ -14,6 +14,7 @@ import OrderHistory from "./pages/OrderHistory/OrderHistory";
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import Account from "./pages/Account/Account";
+import Contact from "./pages/Contact/Contact";
 
 const stripePromise = loadStripe(
   "pk_test_51RRwpzGao1hToinWVxX3YumAg0lmZ4WVE0Fc2GglzMD06kRymEpLgSkcUzpSXu1lZvV3MOmpemf7lrDK4Op0ljQD005Swq7gaq"
@@ -41,6 +42,7 @@ const App = () => {
         <Route path="/signup" element={<SignUp />} />
         <Route path="/orders" element={<OrderHistory />} />
         <Route path="/account" element={<Account />} />
+        <Route path="/contact" element={<Contact />} />
       </Routes>
       <Footer />
     </div>

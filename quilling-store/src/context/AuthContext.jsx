@@ -13,6 +13,7 @@ export const AuthProvider = ({ children }) => {
     if (storedToken) {
       try {
         const decoded = jwtDecode(storedToken);
+        console.log(decoded);
         setToken(storedToken);
         setCurrentUser(decoded);
         localStorage.setItem("currentUser", JSON.stringify(decoded));

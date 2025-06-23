@@ -5,6 +5,7 @@ const cors = require("cors");
 const paymentRoutes = require("./routes/paymentRoutes"); // Added payment routes
 const orderRoutes = require("./routes/orderRoutes");
 const authRoutes = require('./routes/authRoutes');
+const contactRoute = require("./routes/contact");
 
 dotenv.config();
 
@@ -36,6 +37,7 @@ app.use((req, res, next) => {
 app.use("/api/orders", orderRoutes);
 app.use("/api/payments", paymentRoutes); // Added payment integration route
 app.use('/api/auth', authRoutes); 
+app.use("/api/contact", contactRoute);
 
 // Catch-All 404 Route
 app.use((req, res) => {
