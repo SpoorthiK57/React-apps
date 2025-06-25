@@ -188,4 +188,49 @@ h2 {
     display: none !important;
   }
 }
+.dropdown {
+  position: relative;
+}
+
+/* Dropdown menu */
+.dropdown-menu {
+  display: none;
+  position: absolute;
+  top: 100%; 
+  left: 0;
+  background-color: bisque;
+  border: 1px solid #ddd;
+  padding: 8px 0;
+  min-width: 150px;
+  z-index: 100;
+  border-radius: 4px;
+}
+
+/* Keep menu visible when hovering either Products or menu */
+.dropdown:hover .dropdown-menu {
+  display: block;
+}
+
+/* Dropdown items */
+.dropdown-menu li {
+  list-style: none;
+}
+
+.dropdown-menu li a {
+  display: block;
+  padding: 10px 16px;
+  color: #333;
+  text-decoration: none;
+  font-weight: 500;
+  transition: background-color 0.2s ease;
+}
+
+.dropdown-menu li a:hover {
+  background-color: #f7f7f7;
+  color: #ff6600;
+  border-left: 4px solid #ff6600;
+  padding-left: 12px;
+}
+
+
 

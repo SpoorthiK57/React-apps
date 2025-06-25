@@ -6,6 +6,7 @@ const products = [
       price: 15,
       image: '/assets/image1.jpg',
       description: "Handmade colorful quilled flowers perfect for gifting.",
+      category: "Quilling Frames",
     },
     {
       id: 2,
@@ -13,6 +14,7 @@ const products = [
       price: 10,
       image: "/assets/image1.jpg",
       description: "Lightweight, vibrant quilled earrings.",
+      category: "Greeting Cards",
     },
     {
         id: 3,
@@ -20,6 +22,7 @@ const products = [
         price: 15,
         image: "/assets/image1.jpg",
         description: "Handmade colorful quilled flowers perfect for gifting.",
+        category: "Quilling Frames",
       },
       {
         id: 4,
@@ -27,6 +30,7 @@ const products = [
         price: 10,
         image: "/assets/image1.jpg",
         description: "Lightweight, vibrant quilled earrings.",
+        category: "Greeting Cards",
       },
       {
         id: 5,
@@ -34,6 +38,7 @@ const products = [
         price: 10,
         image: "/assets/image1.jpg",
         description: "Handmade colorful quilled flowers perfect for gifting.",
+        category: "Quilling Frames",
       },
       {
         id: 6,
@@ -41,6 +46,7 @@ const products = [
         price: 10,
         image: "/assets/image1.jpg",
         description: "Lightweight, vibrant quilled earrings.",
+        category: "Quilling Frames",
       },
       {
         id: 7,
@@ -48,6 +54,7 @@ const products = [
         price: 15,
         image: "/assets/image1.jpg",
         description: "Handmade colorful quilled flowers perfect for gifting.",
+        category: "Greeting Cards",
       },
       {
         id: 8,
@@ -55,6 +62,7 @@ const products = [
         price: 10,
         image: "/assets/image1.jpg",
         description: "Lightweight, vibrant quilled earrings.",
+        category: "Quilling Frames",
       },
       {
         id: 9,
@@ -62,6 +70,7 @@ const products = [
         price: 10,
         image: "/assets/image1.jpg",
         description: "Handmade colorful quilled flowers perfect for gifting.",
+        category: "Greeting Cards",
       },
       {
         id: 10,
@@ -69,6 +78,7 @@ const products = [
         price: 10,
         image: "/assets/image1.jpg",
         description: "Lightweight, vibrant quilled earrings.",
+        category: "Quilling Frames",
       },
       {
         id: 11,
@@ -76,6 +86,7 @@ const products = [
         price: 15,
         image: "/assets/image1.jpg",
         description: "Handmade colorful quilled flowers perfect for gifting.",
+        category: "Greeting Cards",
       },
       {
         id: 12,
@@ -83,6 +94,7 @@ const products = [
         price:10,
         image: "/assets/image1.jpg",
         description: "Lightweight, vibrant quilled earrings.",
+        category: "Quilling Frames",
       },
       {
         id: 13,
@@ -90,6 +102,7 @@ const products = [
         price: 15,
         image: "/assets/image1.jpg",
         description: "Handmade colorful quilled flowers perfect for gifting.",
+        category: "Greeting Cards",
       },
       {
         id: 14,
@@ -97,6 +110,7 @@ const products = [
         price: 10,
         image: "/assets/image1.jpg",
         description: "Lightweight, vibrant quilled earrings.",
+        category: "Quilling Frames",
       }
     
   ];

@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import "./Navbar.css";
 import quilling_wonderland from "/assets/quilling wonderland.jpg";
-import { NavLink } from "react-router-dom";
+import { NavLink, Link, useNavigate } from "react-router-dom";
 import { CartContext } from "../../context/CartContext";
 import { AuthContext } from "../../context/AuthContext";
 
@@ -12,7 +12,6 @@ const Navbar = () => {
   const { cart } = useContext(CartContext);
   const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
 
-  // Get currentUser and logout from auth context
   const { currentUser, logout } = useContext(AuthContext);
 
   useEffect(() => {
@@ -37,12 +36,10 @@ const Navbar = () => {
         <h2>Paper Quills</h2>
       </div>
 
-      {/* Hamburger menu for mobile */}
       <div className="hamburger" onClick={toggleMenu}>
         ☰
       </div>
 
-      {/* Navigation menu */}
       <div className={`nav-menu ${menuOpen ? "open" : ""}`}>
         <ul className="list" onClick={closeMenu}>
           <li>
@@ -53,14 +50,37 @@ const Navbar = () => {
               Home
             </NavLink>
           </li>
-          <li>
+
+          {/* PRODUCTS WITH DROPDOWN */}
+          <li className="dropdown">
             <NavLink
               to="/products"
-              className={({ isActive }) => (isActive ? "active-link" : "")}
+              className={({ isActive }) =>
+                isActive ? "nav-link active-link" : "nav-link"
+              }
             >
               Products
             </NavLink>
+            <ul className="dropdown-menu">
+              <li>
+                <NavLink
+                  to="/products?category=Greeting Cards"
+                  className="dropdown-link"
+                >
+                  Greeting Cards
+                </NavLink>
+              </li>
+              <li>
+                <NavLink
+                  to="/products?category=Quilling Frames"
+                  className="dropdown-link"
+                >
+                  Quilling Frames
+                </NavLink>
+              </li>
+            </ul>
           </li>
+
           <li>
             <NavLink
               to="/about"
@@ -78,7 +98,6 @@ const Navbar = () => {
             </NavLink>
           </li>
 
-          {/* Mobile-only Cart */}
           <li className="mobile-only">
             <NavLink to="/cart" className="cart-link" onClick={closeMenu}>
               <div className="cart">
@@ -88,7 +107,6 @@ const Navbar = () => {
             </NavLink>
           </li>
 
-          {/* Mobile-only Login / Logout */}
           <li className="mobile-only">
             {currentUser ? (
               <>
@@ -108,7 +126,6 @@ const Navbar = () => {
         </ul>
       </div>
 
-      {/* Desktop-only Cart & Login/Logout */}
       <div className="right desktop-only">
         <div className="cart">
           <NavLink to="/cart">
