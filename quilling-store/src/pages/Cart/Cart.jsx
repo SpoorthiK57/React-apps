@@ -71,19 +71,6 @@ const Cart = () => {
                   Remove
                 </button>
               </div>
-
-              {/* Total (desktop) */}
-              <span className="total-value">
-                ${(parseFloat(item.price) * item.quantity).toFixed(2)}
-              </span>
-
-              {/* Total (mobile) */}
-              <div className="mobile-label">
-                <span className="label-text">Total:</span>
-                <span>
-                  ${(parseFloat(item.price) * item.quantity).toFixed(2)}
-                </span>
-              </div>
             </div>
           ))}
 

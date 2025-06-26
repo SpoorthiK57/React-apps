@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import "./Navbar.css";
 import quilling_wonderland from "/assets/quilling wonderland.jpg";
+import { useAuth } from "../../context/AuthContext";
 import { NavLink, Link, useNavigate } from "react-router-dom";
 import { CartContext } from "../../context/CartContext";
 import { AuthContext } from "../../context/AuthContext";
@@ -11,8 +12,12 @@ const Navbar = () => {
 
   const { cart } = useContext(CartContext);
   const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
-
-  const { currentUser, logout } = useContext(AuthContext);
+  const navigate = useNavigate();
+  const { currentUser, logout } = useAuth();
+  const handleLogout = () => {
+    logout();
+    navigate("/login");
+  };
 
   useEffect(() => {
     const handleScroll = () => {
@@ -134,9 +139,35 @@ const Navbar = () => {
           </NavLink>
         </div>
         <div className="login">
-          <NavLink to={currentUser ? "/account" : "/login"}>
-            <button className="login-button">Login</button>
-          </NavLink>
+          <li className="dropdown">
+            <NavLink to={currentUser ? "/account" : "/login"}>
+              <button className="login-button">Login</button>
+            </NavLink>
+            <ul className="dropdown-menu">
+              <li>
+                <NavLink to="/myaccount" className="dropdown-link">
+                  My Account
+                </NavLink>
+              </li>
+              <li>
+                <NavLink to="/orders" className="dropdown-link">
+                  Order History
+                </NavLink>
+              </li>
+              <li>
+                <NavLink
+                  to="#"
+                  className="dropdown-link"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    handleLogout();
+                  }}
+                >
+                  Logout
+                </NavLink>
+              </li>
+            </ul>
+          </li>
         </div>
       </div>
     </div>

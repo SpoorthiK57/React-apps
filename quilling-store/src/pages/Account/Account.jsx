@@ -14,11 +14,10 @@ const Account = () => {
     }
   }, [loading, currentUser, navigate]);
 
+  const { logout } = useAuth();
+
   const handleLogout = () => {
-    localStorage.removeItem("authToken");
-    localStorage.removeItem("currentUser");
-    setToken(null);
-    setCurrentUser(null);
+    logout();
     navigate("/login");
   };
 
@@ -26,6 +25,9 @@ const Account = () => {
     return <p>Loading...</p>;
   }
   console.log("Current user:", currentUser);
+  if (!currentUser) {
+    return null;
+  }
 
   return (
     <div className="account-page">

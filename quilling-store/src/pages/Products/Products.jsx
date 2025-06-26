@@ -25,7 +25,7 @@ const Products = () => {
       <h1>{category ? category : "Our Collections"}</h1>
 
       {!category ? (
-        // 👉 Show category cards if no category selected
+        // Show category cards if no category selected
         <div className="category-grid">
           <div
             className="category-card"

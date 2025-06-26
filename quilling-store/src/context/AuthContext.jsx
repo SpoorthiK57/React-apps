@@ -31,10 +31,16 @@ export const AuthProvider = ({ children }) => {
     }
     setLoading(false);
   }, []);
+  const logout = () => {
+    localStorage.removeItem("authToken");
+    localStorage.removeItem("currentUser");
+    setToken(null);
+    setCurrentUser(null);
+  };
 
   return (
     <AuthContext.Provider
-      value={{ token, setToken, currentUser, setCurrentUser, loading }}
+      value={{ token, setToken, currentUser, setCurrentUser, loading, logout }}
     >
       {children}
     </AuthContext.Provider>
