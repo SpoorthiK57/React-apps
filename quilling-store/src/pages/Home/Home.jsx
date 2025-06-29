@@ -2,6 +2,7 @@ import React from "react";
 import "./Home.css";
 import { useNavigate } from "react-router-dom";
 import products from "../../data/product";
+import { motion } from "framer-motion";
 
 const Home = () => {
   const navigate = useNavigate();
@@ -16,33 +17,69 @@ const Home = () => {
 
   return (
     <div className="home">
-      <div className="banner">
+      <motion.div
+        className="banner"
+        initial={{ opacity: 0, y: -50 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 1 }}
+      >
         <img src={banner} alt="" className="banner" />
-        <div className="welcome">
+        <motion.div
+          className="welcome"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.5 }}
+        >
           <h2>Welcome to Paper Quills - Handmade Quilling Wonders!</h2>
-        </div>
-        <div className="shop-button">
+        </motion.div>
+        <motion.div
+          className="shop-button"
+          initial={{ scale: 0.8 }}
+          animate={{ scale: 1 }}
+          transition={{ delay: 1.5 }}
+        >
           <button className="shop" onClick={handleShopClick}>
             Shop our products
           </button>
-        </div>
-      </div>
-      <div className="new-arrivals">
+        </motion.div>
+      </motion.div>
+
+      <motion.div
+        className="new-arrivals"
+        initial={{ opacity: 0, y: 50 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 1 }}
+      >
         <h2>New Arrivals</h2>
         <div className="new-arrivals-items">
-          {arrivals.map((item) => (
-            <div key={item.id} className="arrival-item">
-              <img src={item.image} alt={item.name} />
+          {arrivals.map((item, index) => (
+            <motion.div
+              key={item.id}
+              className="arrival-item"
+              whileHover={{ scale: 1.05 }}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: index * 0.2 }}
+            >
+              <img src={item.images[0]} alt={item.name} />
               <p>{item.name}</p>
               <button onClick={() => navigate(`/product/${item.id}`)}>
                 View Details
               </button>
-            </div>
+            </motion.div>
           ))}
         </div>
-      </div>
-      <div className="story">
-        <img src={story_image} alt="" className="bg-img" />
+      </motion.div>
+
+      <motion.div
+        className="story"
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        transition={{ duration: 1 }}
+        viewport={{ once: true }}
+      >
         <h2>The Art of Paper, The Beauty of Patience</h2>
         <p className="my-story">
           What makes quilling special is its simplicity—strips of paper, coiled
@@ -57,7 +94,7 @@ const Home = () => {
           reviving an art form that connects the past with the present—one coil
           at a time.
         </p>
-      </div>
+      </motion.div>
     </div>
   );
 };
