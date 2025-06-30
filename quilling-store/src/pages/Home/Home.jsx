@@ -3,45 +3,71 @@ import "./Home.css";
 import { useNavigate } from "react-router-dom";
 import products from "../../data/product";
 import { motion } from "framer-motion";
+import { useState, useEffect } from "react";
 
 const Home = () => {
   const navigate = useNavigate();
   const handleShopClick = () => {
     navigate("/Products");
   };
-  const banner = "/assets/banner.png";
+  const bannerImages = [
+    "/assets/banner1.png",
+    "/assets/banner2.png",
+    "/assets/banner3.png",
+  ];
+
   const story_image = "/assets/story_bg.png";
   const image1 = "/assets/image1.jpg";
 
-  const arrivals = products.slice(0, 4); // or any 4 you want
+  const arrivals = products.slice(0, 4);
+  const [currentBanner, setCurrentBanner] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentBanner((prev) => (prev + 1) % bannerImages.length);
+    }, 4000);
+
+    return () => clearInterval(interval);
+  }, []);
 
   return (
     <div className="home">
       <motion.div
-        className="banner"
-        initial={{ opacity: 0, y: -50 }}
-        animate={{ opacity: 1, y: 0 }}
+        className="banner-slider"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
         transition={{ duration: 1 }}
       >
-        <img src={banner} alt="" className="banner" />
-        <motion.div
-          className="welcome"
+        <motion.img
+          key={currentBanner}
+          src={bannerImages[currentBanner]}
+          alt="Banner"
+          className="banner-img"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ delay: 0.5 }}
-        >
-          <h2>Welcome to Paper Quills - Handmade Quilling Wonders!</h2>
-        </motion.div>
-        <motion.div
-          className="shop-button"
-          initial={{ scale: 0.8 }}
-          animate={{ scale: 1 }}
-          transition={{ delay: 1.5 }}
-        >
-          <button className="shop" onClick={handleShopClick}>
-            Shop our products
-          </button>
-        </motion.div>
+          exit={{ opacity: 0 }}
+          transition={{ duration: 1 }}
+        />
+        <div className="banner-overlay">
+          <motion.div
+            className="welcome"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.5 }}
+          >
+            <h2>Welcome to Paper Quills - Handmade Quilling Wonders!</h2>
+          </motion.div>
+          <motion.div
+            className="shop-button"
+            initial={{ scale: 0.8 }}
+            animate={{ scale: 1 }}
+            transition={{ delay: 1 }}
+          >
+            <button className="shop" onClick={handleShopClick}>
+              Shop our products
+            </button>
+          </motion.div>
+        </div>
       </motion.div>
 
       <motion.div

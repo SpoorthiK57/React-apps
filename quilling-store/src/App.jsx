@@ -15,6 +15,7 @@ import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import Account from "./pages/Account/Account";
 import Contact from "./pages/Contact/Contact";
+import ScrollToTop from "./components/ScrollToTop";
 
 const stripePromise = loadStripe(
   "pk_test_51RRwpzGao1hToinWVxX3YumAg0lmZ4WVE0Fc2GglzMD06kRymEpLgSkcUzpSXu1lZvV3MOmpemf7lrDK4Op0ljQD005Swq7gaq"
@@ -24,6 +25,7 @@ const App = () => {
   return (
     <div className="app">
       <Navbar />
+      <ScrollToTop />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/products" element={<Products />} />
